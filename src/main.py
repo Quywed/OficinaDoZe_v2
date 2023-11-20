@@ -2,7 +2,7 @@ from clientes import *
 #from faturas import 
 #from io_ficheiros import (carrega_as_listas_dos_ficheiros, guarda_as_listas_em_ficheiros)
 #from io_terminal import pause
-#from veiculos import *
+from veiculos import *
 
 
 
