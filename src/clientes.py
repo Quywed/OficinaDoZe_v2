@@ -32,11 +32,8 @@ def imprime_lista_de_clientes(conn):
 
     print("Lista de Clientes:")
     for cliente in lista_de_clientes:
-        print(f"ID: {cliente[0]}")
-        print(f"Nome: {cliente[1]}")
-        print(f"NIF: {cliente[2]}")
-        print(f"E-mail: {cliente[3]}")
-        print(f"telemovel: {cliente[4]}")
-        print("-" * 20)
-
-    conn.close()
+        print(f"Nome: {cliente['nome']}")
+        print(f"NIF: {cliente['nif']}")
+        print(f"E-mail: {cliente['email']}")
+        print(f"Telemovel: {cliente['telemovel']}")
+        print("-" * 20)  # Linha separadora entre os clientes
