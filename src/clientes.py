@@ -38,3 +38,5 @@ def imprime_lista_de_clientes(conn):
         print(f"Telemovel: {cliente['telemovel']}")
         print("-" * 20)  # Linha separadora entre os clientes
 
+#
+
