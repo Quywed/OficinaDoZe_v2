@@ -1,43 +1,42 @@
-from io_terminal import imprime_lista
+import sqlite3
 
-nome_ficheiro_lista_de_clientes = "lista_de_clientes.pk"
+# Função para inserir um novo cliente
+def inserir_novo_cliente(conn):
 
-def imprime_lista_de_clientes(lista_de_clientes):
-    """TODO: documentação"""
+    cursor = conn.cursor()
 
-    #TODO: Implementar esta função
-    # ...
+    nome = input("Nome do cliente: ")
+    nif = input("NIF do cliente: ")
+    email = input("E-mail do cliente: ")
+    telefone = input("Telefone do cliente: ")
 
-def cria_novo_cliente():
-    # Inicialize um dicionário vazio para armazenar as informações do cliente
-    novo_cliente = {}
+    cursor.execute('''
+        INSERT INTO clientes (nif, name, email, telefone)
+        VALUES (?, ?, ?, ?)
+    ''', (nif, nome, email, telefone))
+    
+    conn.commit()
+    conn.close()
 
-    # Solicite as informações do cliente ao usuário
-    novo_cliente["nome"] = input("Nome do cliente: ")
-    novo_cliente["nif"] = input("NIF do cliente: ")
-    novo_cliente["email"] = input("E-mail do cliente: ")
-    novo_cliente["telefone"] = input("Telefone do cliente: ")
+# Função para imprimir a lista de clientes
+def imprime_lista_de_clientes(conn):
 
-    # Retorne o dicionário com as informações do novo cliente
-    return novo_cliente
+    cursor = conn.cursor()
 
-nome_ficheiro_lista_de_clientes = "lista_de_clientes.pk"
+    cursor.execute('SELECT * FROM clientes')
+    lista_de_clientes = cursor.fetchall()
 
-def imprime_lista_de_clientes(lista_de_clientes):
-    """
-    Imprime a lista de clientes.
-
-    :param lista_de_clientes: Uma lista de dicionários, onde cada dicionário contém informações de um cliente.
-    """
     if not lista_de_clientes:
         print("A lista de clientes está vazia.")
         return
 
     print("Lista de Clientes:")
     for cliente in lista_de_clientes:
-        print(f"Nome: {cliente['nome']}")
-        print(f"NIF: {cliente['nif']}")
-        print(f"E-mail: {cliente['email']}")
-        print(f"Telemovel: {cliente['telemovel']}")
-        print("-" * 20)  # Linha separadora entre os clientes
+        print(f"ID: {cliente[0]}")
+        print(f"Nome: {cliente[1]}")
+        print(f"NIF: {cliente[2]}")
+        print(f"E-mail: {cliente[3]}")
+        print(f"telemovel: {cliente[4]}")
+        print("-" * 20)
 
+    conn.close()
