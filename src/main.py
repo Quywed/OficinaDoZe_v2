@@ -1,8 +1,8 @@
-from clientes import cria_novo_cliente, imprime_lista_de_clientes
+from clientes import *
 #from faturas import 
 #from io_ficheiros import (carrega_as_listas_dos_ficheiros, guarda_as_listas_em_ficheiros)
 #from io_terminal import pause
-from veiculos import insert_veiculo, list_veiculo
+#from veiculos import *
 
 
 
@@ -29,14 +29,10 @@ def menu():
     # CURSOR PARA EXECUTAR QUERYS
     cursor = conn.cursor()
     
-    lista_de_veiculos = []
-    lista_de_clientes = []
-    lista_de_faturas = []
-
     while True:
         print("""
         *********************************************************************
-        :    (-: OFICINA BARATINHA - RESISTIMOS A QUALQUER ORÇAMENTO :-)    :
+        :    (-: OFICINA DO ZÉ - MORTE AO IUC :-)                           :
         *********************************************************************
         :                                                                   :
         : CC - CRIAR Cliente         LC - LISTAR Clientes                   :
@@ -49,35 +45,36 @@ def menu():
         *********************************************************************
         """)
 
-        op = input("opcao?").lower()
+        op = input("opcao?")
 
         if op == "x":
             exit()
-
+        
 #CRIACAO
-        elif op == "CC":
+        elif op == "cc":
             #TODO FUNCAO CRIAR CLIENTE
-            continue
+            pass
 
-        elif op == "CV":
+        elif op == "cv":
             #TODO FUNCAO CRIAR VEICULO
             insert_veiculo(conn)
 
-        elif op == "CF":
+        elif op == "cf":
             #TODO FUNCAO CRIAR FATURA
-            continue
+            pass
 
 #LISTAGEM
-        elif op == "LC":
+        elif op == "lc":
            #TODO FUNCAO LISTAR CLIENTES
+           imprime_lista_de_clientes(conn)
            pass
 
-        elif op == "LV":
+        elif op == "lv":
             list_veiculos(conn)
             #TODO FUNCAO LISTAR VEICULOS
             pass
 
-        elif op == "LF":
+        elif op == "lf":
             #TODO FUNCAO LISTAR FATURAS
             pass
 
