@@ -1,26 +1,85 @@
 from clientes import cria_novo_cliente, imprime_lista_de_clientes
-from faturas import cria_nova_fatura, imprime_lista_de_faturas
-from io_ficheiros import (carrega_as_listas_dos_ficheiros,
-                          guarda_as_listas_em_ficheiros)
-from io_terminal import pause
-from veiculos import cria_novo_veiculo, imprime_lista_de_veiculos
+#from faturas import 
+#from io_ficheiros import (carrega_as_listas_dos_ficheiros, guarda_as_listas_em_ficheiros)
+#from io_terminal import pause
+from veiculos import insert_veiculo, list_veiculo
 
 
 
 ####################################################################
 #
-# TODO: Copie para aqui o código de cada uma das funções nos
-# ficheiros com o nome main-*.py e faça um commit de cada vez
-# Quando este ficheiro estiver completo com todas as suas funções,
-# deve ser o unico ficheiro main.py existente, deve apagar
-# todos os outros ficheiros main-*.py, e inclusive estes comentários
-
+# TODO: CRIAR FUNCOES DE CRUD PARA CADA TABELA 
+#       IMPORT DAS DEVIDAS FUNCOES
+#
+#
 # ...
-
-
-
-
+#
+#
+#
 ####################################################################
+
+
+
+def menu():
+    """Menu principal da aplicação"""
+
+    # CONEXAO
+    conn = sqlite3.connect('src/oficina.db')
+
+    # CURSOR PARA EXECUTAR QUERYS
+    cursor = conn.cursor()
+    
+    lista_de_veiculos = []
+    lista_de_clientes = []
+    lista_de_faturas = []
+
+    while True:
+        print("""
+        *********************************************************************
+        :    (-: OFICINA BARATINHA - RESISTIMOS A QUALQUER ORÇAMENTO :-)    :
+        *********************************************************************
+        :                                                                   :
+        : CC - CRIAR Cliente         LC - LISTAR Clientes                   :
+        : CV - CRIAR Veiculo         LV - LISTAR Veiculos                   :
+        : CF - CRIAR Fatura          LF - LISTAR Faturas                    :
+        :                                                                   :
+        :                                                                   :
+        : X - EXIT                                                          :
+        :                                                                   :
+        *********************************************************************
+        """)
+
+        op = input("opcao?").lower()
+
+        if op == "x":
+            exit()
+
+#CRIACAO
+        elif op == "CC":
+            #TODO FUNCAO CRIAR CLIENTE
+            continue
+
+        elif op == "CV":
+            #TODO FUNCAO CRIAR VEICULO
+            insert_veiculo(conn)
+
+        elif op == "CF":
+            #TODO FUNCAO CRIAR FATURA
+            continue
+
+#LISTAGEM
+        elif op == "LC":
+           #TODO FUNCAO LISTAR CLIENTES
+           pass
+
+        elif op == "LV":
+            list_veiculos(conn)
+            #TODO FUNCAO LISTAR VEICULOS
+            pass
+
+        elif op == "LF":
+            #TODO FUNCAO LISTAR FATURAS
+            pass
 
 if __name__ == "__main__":
     menu()
