@@ -11,9 +11,9 @@ def inserir_novo_cliente(conn):
     telefone = input("Telefone do cliente: ")
 
     cursor.execute('''
-        INSERT INTO clientes (nome, nif, email, telefone)
+        INSERT INTO clientes (nif, name, email, telefone)
         VALUES (?, ?, ?, ?)
-    ''', (nome, nif, email, telefone))
+    ''', (nif, nome, email, telefone))
     
     conn.commit()
     conn.close()
