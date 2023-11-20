@@ -28,7 +28,7 @@ def inserir_novo_cliente(cliente):
     cursor.execute('''
         INSERT INTO cliente (nome, nif, email, telefone)
         VALUES (?, ?, ?, ?)
-    ''', (cliente['nome'], cliente['nif'], cliente['email'], cliente['telefone']))
+    ''', (cliente['nome'], cliente['nif'], cliente['email'], cliente['telemovel']))
     
     conn.commit()
     conn.close()
@@ -51,7 +51,7 @@ def imprime_lista_de_clientes():
         print(f"Nome: {cliente[1]}")
         print(f"NIF: {cliente[2]}")
         print(f"E-mail: {cliente[3]}")
-        print(f"Telefone: {cliente[4]}")
+        print(f"telemovel: {cliente[4]}")
         print("-" * 20)
 
     conn.close()
