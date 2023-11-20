@@ -15,7 +15,7 @@ cursor.execute('''
 
 
 #INSERTS
-cursor.executemany("INSERT INTO **** (field1, field2) VALUES (?, ?)", users_data)
+cursor.executemany("INSERT INTO **** (field1, field2) VALUES (?, ?)" ) #Falta adicionar as variáveis 
 
 #LISTAR
 cursor.execute("SELECT * FROM _nome_tabela;")
@@ -24,7 +24,7 @@ tables = cursor.fetchall()
 print(type(tables))
 
 for i in tables:
-    print(f"FIELD1: {i[0]}, FIELD2: {i[1]}")
+    print(f"Username: {i[0]}, Email: {i[1]}")
 
 conn.commit() #COMITT
 conn.close() #FECHAR A CONEXAO
