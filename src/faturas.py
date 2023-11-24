@@ -1,6 +1,5 @@
 from datetime import date
-
-from io_terminal import imprime_lista, pergunta_id
+import sqlite3
 
 nome_ficheiro_lista_de_faturas = "lista_de_faturas.pk"
 
