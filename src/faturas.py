@@ -1,23 +1,22 @@
 from datetime import datetime
 import sqlite3
-from io_terminal import imprime_lista, pergunta_id
 
-nome_ficheiro_lista_de_faturas = "lista_de_faturas.pk"
 
-def cria_nova_fatura(cliente_nif, descricao, valor):
-    conn = sqlite3.connect('src/oficina.db')
+def cria_nova_fatura(conn):
     cursor = conn.cursor()
 
+    cliente_nif = int(input("NIF Cliente: "))  
+    descricao = input("Descrição da Fatura: ")
+    valor = input("Valor da Fatura: ")
+    
     data_criacao = datetime.now()
 
     cursor.execute("INSERT INTO faturas (cliente_nif, data_criacao, descricao, valor) VALUES (?, ?, ?, ?)",
                    (cliente_nif, data_criacao, descricao, valor))
 
     conn.commit()
-    conn.close()
 
-def imprime_lista_de_faturas():
-    conn = sqlite3.connect('src/oficina.db')
+def imprime_lista_de_faturas(conn):
     cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM faturas")
@@ -27,7 +26,6 @@ def imprime_lista_de_faturas():
     for fatura in faturas:
         print(fatura)
 
-    conn.close()
 
 
 def faturas_cliente(conn, cliente_nif):

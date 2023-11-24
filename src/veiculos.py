@@ -38,8 +38,7 @@ def insert_veiculo(conn):
         print(f"Erro inesperado: {e}")
         conn.rollback()
 
-    finally:
-        conn.close()
+    
 
 
 
@@ -66,8 +65,6 @@ def select_veiculo_cliente(conn, client_nif):
     except Exception as e:
         print(f"Erro inesperado: {e}")
 
-    finally:
-        conn.close()
 
 
 def list_veiculos(conn):
@@ -93,6 +90,5 @@ def list_veiculos(conn):
     except Exception as e:
         print(f"Erro inesperado: {e}")
 
-    finally:
-        conn.close()
+
 
