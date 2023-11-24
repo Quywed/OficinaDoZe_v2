@@ -87,7 +87,12 @@ def list_veiculos(conn):
         else:
             print("Não ouve veiculos encontrados na Tabela")
 
-    except sqlite3.Error as e:
-        print(f"Erro: {e}")
+    except sqlite3.Error as sqlite_error:
+        print(f"Erro no SQLite durante a execução da query: {sqlite_error}")
 
+    except Exception as e:
+        print(f"Erro inesperado: {e}")
+
+    finally:
+        conn.close()
 
