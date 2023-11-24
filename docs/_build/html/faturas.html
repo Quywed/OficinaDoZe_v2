@@ -14,6 +14,8 @@
     <script src="_static/translations.js?v=3b002d5c"></script>
     <link rel="index" title="Índice" href="genindex.html" />
     <link rel="search" title="Pesquisar" href="search.html" />
+    <link rel="next" title="main module" href="main.html" />
+    <link rel="prev" title="clientes module" href="clientes.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -30,8 +32,29 @@
 
           <div class="body" role="main">
             
-  <section id="faturas-module">
-<h1>faturas module<a class="headerlink" href="#faturas-module" title="Link to this heading">¶</a></h1>
+  <section id="module-faturas">
+<span id="faturas-module"></span><h1>faturas module<a class="headerlink" href="#module-faturas" title="Link to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="faturas.cria_nova_fatura">
+<span class="sig-prename descclassname"><span class="pre">faturas.</span></span><span class="sig-name descname"><span class="pre">cria_nova_fatura</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cliente_nif</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descricao</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/faturas.html#cria_nova_fatura"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#faturas.cria_nova_fatura" title="Link to this definition">¶</a></dt>
+<dd><p>Cria uma nova fatura no banco de dados.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cliente_nif</strong> (<em>int</em>) – NIF do cliente associado à fatura.</p></li>
+<li><p><strong>descricao</strong> (<em>str</em>) – Descrição da fatura.</p></li>
+<li><p><strong>valor</strong> (<em>float</em>) – Valor da fatura.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="faturas.imprime_lista_de_faturas">
+<span class="sig-prename descclassname"><span class="pre">faturas.</span></span><span class="sig-name descname"><span class="pre">imprime_lista_de_faturas</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/faturas.html#imprime_lista_de_faturas"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#faturas.imprime_lista_de_faturas" title="Link to this definition">¶</a></dt>
+<dd><p>Imprime a lista de todas as faturas presentes no banco de dados.</p>
+</dd></dl>
+
 </section>
 
 
@@ -51,11 +74,26 @@
 
 
 <h3>Navegação</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="bd_file.html">bd_file module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clientes.html">clientes module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">faturas module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="main.html">main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="veiculos.html">veiculos module</a></li>
+</ul>
+</li>
+</ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">src</a><ul>
+      <li>Previous: <a href="clientes.html" title="capítulo anterior">clientes module</a></li>
+      <li>Next: <a href="main.html" title="próximo capítulo">main module</a></li>
+  </ul></li>
   </ul></li>
 </ul>
 </div>
