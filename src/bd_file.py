@@ -1,6 +1,10 @@
 import sqlite3
 from datetime import datetime
 import random
+import hashlib
+
+def hash_password(password):
+    return hashlib.sha256(password.encode()).hexdigest()
 
 # CONEXAO
 conn = sqlite3.connect('src/oficina.db')
@@ -28,7 +32,18 @@ cursor.execute('''
         nif INTEGER PRIMARY KEY,
         name TEXT,
         email TEXT,
-        telefone TEXT
+        telefone TEXT,
+        password_hash TEXT
+    );
+''')
+
+# TABELA empregados
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS empregados (
+        empregado_nif INTEGER PRIMARY KEY,
+        name TEXT,
+        email TEXT,
+        password_hash TEXT
     );
 ''')
 
@@ -44,23 +59,24 @@ cursor.execute('''
     );
 ''')
 
-# TABELA users
-cursor.execute('''
-    CREATE TABLE IF NOT EXISTS users (
-        username TEXT PRIMARY KEY,
-        password TEXT,
-        role TXT
-    );
-''')
-
 # INSERTS
 veiculos_data = []
 clientes_data = []
+empregados_data = []
 faturas_data = []
 
+for e in range(2):
+    password_empregado = "password_empregado"  # Change this to your password logic
+    password_hash_empregado = hashlib.sha256(password_empregado.encode()).hexdigest()
+    empregados_data.append((e + 1, f'Empregado{e}', f'empregado{e}@email.com', password_hash_empregado))
+
+cursor.executemany("INSERT INTO empregados VALUES (?, ?, ?, ?)", empregados_data)
+
 for c in range(2):
+    password_cliente = "password_cliente"  # Change this to your password logic
+    password_hash_cliente = hashlib.sha256(password_cliente.encode()).hexdigest()
     cliente_random = random.randint(1000, 9999)
-    clientes_data.append((cliente_random, f'Cliente{c}', f'cliente{c}@email.com', '123456789'))
+    clientes_data.append((cliente_random, f'Cliente{c}', f'cliente{c}@email.com', '123456789', password_hash_cliente))
 
 for v in range(2):
     matricula_random = f"ABC{random.randint(100, 999)}"
@@ -72,16 +88,9 @@ for f in range(2):
     cliente_random = random.choice(clientes_data)[0]
     faturas_data.append((faturas_random, cliente_random, datetime.now(), 'Servico1', 100.00))
 
-users_data = [
-    ('empregado', 'password_empregado', 'empregado'),
-    ('cliente', 'password_cliente', 'cliente')
-]
-
 cursor.executemany("INSERT INTO Veiculos VALUES (?, ?, ?, ?, ?, ?, ?)", veiculos_data)
-cursor.executemany("INSERT INTO clientes VALUES (?, ?, ?, ?)", clientes_data)
+cursor.executemany("INSERT INTO clientes VALUES (?, ?, ?, ?, ?)", clientes_data)
 cursor.executemany("INSERT INTO faturas VALUES (?, ?, ?, ?, ?)", faturas_data)
-cursor.executemany("INSERT INTO users VALUES (?, ?, ?)", users_data)
-
 
 # LISTAR (SELECT)
 cursor.execute("SELECT * FROM Veiculos;")
@@ -97,6 +106,13 @@ clientes = cursor.fetchall()
 print("\nCLIENTES:")
 for cliente in clientes:
     print(cliente)
+
+cursor.execute("SELECT * FROM empregados;")
+empregados = cursor.fetchall()
+
+print("\nEMPREGADO:")
+for i in empregados:
+    print(i)
 
 cursor.execute("SELECT * FROM faturas;")
 faturas = cursor.fetchall()
