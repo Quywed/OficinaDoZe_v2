@@ -7,7 +7,7 @@ def insert_veiculo(conn):
         matricula = input("Matricula: ")
         modelo = input("Modelo: ")
         marca = input("Marca: ")
-        ano = int(input("Ano: "))
+        ano = int(input("Ano:  "))
         km = int(input("Km: "))
         nome_motor = input("Nome do Motor: ")
         cliente_nif = int(input("NIF Cliente: "))
