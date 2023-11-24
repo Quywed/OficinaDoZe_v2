@@ -17,4 +17,16 @@ def cria_nova_fatura(cliente_nif, descricao, valor):
     conn.close()
 
 def imprime_lista_de_faturas():
-   pass
+    conn = sqlite3.connect('src/oficina.db')
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM faturas")
+    faturas = cursor.fetchall()
+
+    print("\nFATURAS:")
+    for fatura in faturas:
+        print(fatura)
+
+    conn.close()
+
+
