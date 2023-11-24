@@ -1,5 +1,5 @@
-from datetime import date
-
+from datetime import datetime
+import sqlite3
 from io_terminal import imprime_lista, pergunta_id
 
 nome_ficheiro_lista_de_faturas = "lista_de_faturas.pk"
@@ -30,3 +30,15 @@ def imprime_lista_de_faturas():
     conn.close()
 
 
+def faturas_cliente(conn, cliente_nif):
+
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM faturas WHERE cliente_nif = ?", (cliente_nif,))
+    faturas_cliente = cursor.fetchall()
+
+    print(f"\nFATURAS DO CLIENTE {cliente_nif}:")
+    for fatura in faturas_cliente:
+        print(fatura)
+
+    conn.close()
