@@ -133,7 +133,7 @@ def menu():
             elif op == "2":
                 #TODO FUNCAO LISTAR FATURA DE UM CLIENTE
                 cliente_nif = input("Insira o NIF do Cliente: " )
-                
+                faturas_cliente(conn,cliente_nif)
             elif op == "3":
                 #TODO FUNCAO LISTAR TODOS AS FATURAS
                 imprime_lista_de_faturas(conn)
