@@ -1,18 +1,23 @@
 import sqlite3  
 
 def insert_veiculo(conn):
-
-    cursor = conn.cursor()
-    matricula = input("Matricula: ")
-    modelo = input("Modelo: ")
-    marca = input("Marca: ")
-    ano = int(input("Ano: "))
-    km = int(input("Km: "))
-    nome_motor = input("Nome do Motor: ")
-    cliente_nif = int(input("NIF Cliente: "))
-
-
     try:
+        cursor = conn.cursor()
+
+        matricula = input("Matricula: ")
+        modelo = input("Modelo: ")
+        marca = input("Marca: ")
+        ano = int(input("Ano: "))
+        km = int(input("Km: "))
+        nome_motor = input("Nome do Motor: ")
+        cliente_nif = int(input("NIF Cliente: "))
+
+        if ano < 1900 or ano > 2023:
+            raise ValueError("Ano inválido. Deve estar entre 1900 e 2023.")
+
+        if km < 0:
+            raise ValueError("A quilometragem não pode ser negativa.")
+
         cursor.execute('''
             INSERT INTO Veiculos (matricula, modelo, marca, ano, km, nome_motor, cliente_nif)
             VALUES (?, ?, ?, ?, ?, ?, ?);
@@ -20,12 +25,21 @@ def insert_veiculo(conn):
 
         conn.commit()
         print("Veiculo inserido com sucesso.")
-    except sqlite3.Error as e:
-        print(f"Erro no insert do veiculo: {e}")
+
+    except sqlite3.Error as sqlite_error:
+        print(f"Erro no SQLite durante a execução da query: {sqlite_error}")
         conn.rollback()
 
-    conn = sqlite3.connect('src/oficina.db')
-    conn.close()
+    except ValueError as value_error:
+        print(f"Erro nos dados inseridos: {value_error}")
+        conn.rollback()
+
+    except Exception as e:
+        print(f"Erro inesperado: {e}")
+        conn.rollback()
+
+    finally:
+        conn.close()
 
 
 
