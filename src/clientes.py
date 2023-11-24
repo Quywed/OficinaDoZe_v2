@@ -11,14 +11,14 @@ def inserir_novo_cliente(conn):
     telefone = input("Telefone do cliente: ")
 
     cursor.execute('''
-        INSERT INTO clientes_all (nif, name, email, telefone)
+        INSERT INTO clientes (nif, name, email, telefone)
         VALUES (?, ?, ?, ?)
     ''', (nif, nome, email, telefone))
     
     conn.commit()
     conn.close()
 
-# Função para imprimir a lista de clientes_all
+# Função para imprimir a lista de clientes
 def imprime_lista_de_clientes(conn):
 
     try:
