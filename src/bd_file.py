@@ -44,6 +44,15 @@ cursor.execute('''
     );
 ''')
 
+# TABELA users
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS users (
+        username TEXT PRIMARY KEY,
+        password TEXT,
+        role TXT
+    );
+''')
+
 # INSERTS
 veiculos_data = []
 clientes_data = []
@@ -63,9 +72,16 @@ for f in range(2):
     cliente_random = random.choice(clientes_data)[0]
     faturas_data.append((faturas_random, cliente_random, datetime.now(), 'Servico1', 100.00))
 
+users_data = [
+    ('empregado', 'password_empregado', 'empregado'),
+    ('cliente', 'password_cliente', 'cliente')
+]
+
 cursor.executemany("INSERT INTO Veiculos VALUES (?, ?, ?, ?, ?, ?, ?)", veiculos_data)
 cursor.executemany("INSERT INTO clientes VALUES (?, ?, ?, ?)", clientes_data)
 cursor.executemany("INSERT INTO faturas VALUES (?, ?, ?, ?, ?)", faturas_data)
+cursor.executemany("INSERT INTO users VALUES (?, ?, ?)", users_data)
+
 
 # LISTAR (SELECT)
 cursor.execute("SELECT * FROM Veiculos;")
