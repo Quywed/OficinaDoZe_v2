@@ -5,6 +5,17 @@ from io_terminal import imprime_lista, pergunta_id
 nome_ficheiro_lista_de_faturas = "lista_de_faturas.pk"
 
 def cria_nova_fatura(cliente_nif, descricao, valor):
+    """
+    Cria uma nova fatura no banco de dados.
+
+    :param cliente_nif: NIF do cliente associado à fatura.
+    :type cliente_nif: int
+    :param descricao: Descrição da fatura.
+    :type descricao: str
+    :param valor: Valor da fatura.
+    :type valor: float
+    """
+
     conn = sqlite3.connect('src/oficina.db')
     cursor = conn.cursor()
 
@@ -17,6 +28,9 @@ def cria_nova_fatura(cliente_nif, descricao, valor):
     conn.close()
 
 def imprime_lista_de_faturas():
+    """
+    Imprime a lista de todas as faturas presentes no banco de dados.
+    """
     conn = sqlite3.connect('src/oficina.db')
     cursor = conn.cursor()
 
