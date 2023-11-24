@@ -133,10 +133,10 @@ def menu():
             elif op == "2":
                 #TODO FUNCAO LISTAR FATURA DE UM CLIENTE
                 cliente_nif = input("Insira o NIF do Cliente: " )
-                select_veiculo_cliente(conn, cliente_nif)
+                
             elif op == "3":
                 #TODO FUNCAO LISTAR TODOS AS FATURAS
-                list_veiculos(conn)
+                imprime_lista_de_faturas(conn)
             elif op == "x":
                 exit()
     
