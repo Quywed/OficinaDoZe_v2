@@ -54,14 +54,20 @@ def select_veiculo_cliente(conn, client_nif):
         cars = cursor.fetchall()
 
         if cars:
-            print(f"Carros do Cliente com o NIF:{client_nif}:")
+            print(f"Carros do Cliente com o NIF: {client_nif}:")
             for car in cars:
                 print(f"Matricula: {car[0]}, Modelo: {car[1]}, Marca: {car[2]}, Ano: {car[3]}, KM: {car[4]}, Nome do Motor: {car[5]}")
         else:
             print(f"O Cliente com o NIF: {client_nif} não tem carros")
 
-    except sqlite3.Error as e:
-        print(f"Erro ao procurar os carros: {e}")
+    except sqlite3.Error as sqlite_error:
+        print(f"Erro no SQLite durante a execução da query: {sqlite_error}")
+
+    except Exception as e:
+        print(f"Erro inesperado: {e}")
+
+    finally:
+        conn.close()
 
 
 def list_veiculos(conn):
