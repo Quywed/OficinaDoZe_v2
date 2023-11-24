@@ -32,7 +32,7 @@ def menu():
     while True:
         print("""
         *********************************************************************
-        :    (-: OFICINA DO ZÉ - MORTE AO IUC :-)                           :
+        :                (-: OFICINA DO ZÉ - MORTE AO IUC :-)               :
         *********************************************************************
         :                                                                   :
         : CC - CRIAR Cliente         LC - LISTAR Clientes                   :
