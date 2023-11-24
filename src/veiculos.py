@@ -1,6 +1,15 @@
 import sqlite3  
 
 def insert_veiculo(conn):
+    """
+    Insere um veículo no banco de dados.
+
+    Parametros:
+        conn (sqlite3.Connection): O objeto de conexão SQLite.
+
+    Returns:
+        None
+    """
     try:
         cursor = conn.cursor()
 
