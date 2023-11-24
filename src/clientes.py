@@ -11,29 +11,36 @@ def inserir_novo_cliente(conn):
     telefone = input("Telefone do cliente: ")
 
     cursor.execute('''
-        INSERT INTO clientes (nif, name, email, telefone)
+        INSERT INTO clientes_all (nif, name, email, telefone)
         VALUES (?, ?, ?, ?)
     ''', (nif, nome, email, telefone))
     
     conn.commit()
     conn.close()
 
-# Função para imprimir a lista de clientes
+# Função para imprimir a lista de clientes_all
 def imprime_lista_de_clientes(conn):
 
-    cursor = conn.cursor()
+    try:
+        cursor = conn.cursor()
 
-    cursor.execute('SELECT * FROM clientes')
-    lista_de_clientes = cursor.fetchall()
+        cursor.execute('''
+            SELECT * FROM clientes;
+        ''')
 
-    if not lista_de_clientes:
-        print("A lista de clientes está vazia.")
-        return
+        clientes_all= cursor.fetchall()
 
-    print("Lista de Clientes:")
-    for cliente in lista_de_clientes:
-        print(f"Nome: {cliente['nome']}")
-        print(f"NIF: {cliente['nif']}")
-        print(f"E-mail: {cliente['email']}")
-        print(f"Telemovel: {cliente['telemovel']}")
-        print("-" * 20)  # Linha separadora entre os clientes
+        print(f"\nNIF |  NAME | EMAIL | TELEFONE ")
+
+        if clientes_all:
+            print("")
+            for i in clientes_all:
+                print(f" {i[0]} | {i[1]} |  {i[2]} | {i[3]}")
+        else:
+            print("Não existem clientes.")
+
+        leave = input("\nClique qualquer botão para SAIR.")
+
+    except sqlite3.Error as e:
+        print(f"Erro: {e}")
+    
