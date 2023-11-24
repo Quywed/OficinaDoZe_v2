@@ -34,7 +34,7 @@ def login(cursor, letra):
         if client:        
             
             
-            return True
+            return nif_input
         else:
             print("Cliente não foi encontrado ou introduziu a senha incorretamente.")
             return False
@@ -45,9 +45,6 @@ def login(cursor, letra):
         empregado = cursor.fetchall()
  
         if empregado:
-
-
-
             return True
         else:
             print("Empregado não foi encontrado ou introduziu a senha incorretamente.")
@@ -68,8 +65,8 @@ def menu():
             :                (-: OFICINA DO ZÉ - MORTE AO IUC :-)               :
             *********************************************************************
             : LOGIN                                                             :
-            :                           C - Cliente                             :
-            :                           E - Empregado                           :
+            :                           1 - Cliente                             :
+            :                           2 - Empregado                           :
             :                                                                   :
             :                                                                   :
             :                                                                   :
@@ -79,7 +76,7 @@ def menu():
             """)
 
         op = input("opcao?")
-        if op == 'c':
+        if op == "1":
             #cliente_encontrado = login(conn, op) | este valor deve ser o nif do cliente encontrado
             # Entrar em Login Clientes  
             print("""
@@ -87,8 +84,8 @@ def menu():
             :                (-: OFICINA DO ZÉ - MORTE AO IUC :-)               :
             *********************************************************************
             : LOGIN CLIENTES                                                    :
-            :                           L - Login                               :
-            :                           C - Criar Conta                         :
+            :                           C - Login                               :
+            :                           CC - Criar Conta                         :
             :                                                                   :
             :                                                                   :
             :                                                                   :
@@ -96,11 +93,15 @@ def menu():
             :                                                                   :
             *********************************************************************
             """)
-            if op == 'l':
-                # TODO Login Clientes
-                
+            opc = input("opcao?")
+            if opc == 'c':
+                # TODO Login Clientes | As funcoes teem que ser adicionadas apenas usando o cliente encontrado
+                cliente_encontrado = login(cursor,opc)
+                if cliente_encontrado != "":
+                    print("Nif do gajo " + str(cliente_encontrado))
+
                 pass
-            elif op == 'c':
+            elif opc == 'cc':
                 # TODO Criar Conta Clientes
                 pass
 
@@ -113,117 +114,6 @@ def menu():
 
         elif op == "x":
             exit()
-    
-        while True:
-            print("""
-            *********************************************************************
-            :                (-: OFICINA DO ZÉ - MORTE AO IUC :-)               :
-            *********************************************************************
-            :                                                                   :
-            :                           C - Cliente                             :
-            :                           V - Veiculo                             :
-            :                           F - Fatura                              :
-            :                                                                   :
-            :                                                                   :
-            : X - EXIT                                                          :
-            :                                                                   :
-            *********************************************************************
-            """)
-
-            op = input("opcao?")
-
-            if op == "x":
-                exit()
-            
-    #CRIACAO
-            elif op == "c":
-                #TODO FUNCAO CRIAR CLIENTE
-                print("""
-                        *********************************************************************
-                        :                (-: OFICINA DO ZÉ - MORTE AO IUC :-)               :
-                        *********************************************************************
-                        : CLIENTES                                                          :
-                        :                       1 - Inserir Novo Cliente                    :
-                        :                       2 - Listar Todos os Clientes                :
-                        :                                                                   :
-                        :                                                                   :
-                        :                                                                   :
-                        : X - EXIT                                                          :
-                        :                                                                   :
-                        *********************************************************************
-                        """)
-
-                op = input("opcao?")
-                if op == "1":
-                    #TODO FUNCAO INSERIR NOVO CLIENTE
-                    inserir_novo_cliente(conn)
-                elif op == "2":
-                    #TODO FUNCAO LISTAR TODOS OS CLIENTES    
-                    imprime_lista_de_clientes(conn)
-                elif op == "x":
-                    exit()
-
-            elif op == "v":
-                #TODO FUNCAO CRIAR VEICULO
-                print("""
-                        *********************************************************************
-                        :                (-: OFICINA DO ZÉ - MORTE AO IUC :-)               :
-                        *********************************************************************
-                        : VEICULOS                                                          :
-                        :                       1 - Inserir Veiculos                        :
-                        :                       2 - Listar Veiculos de um Cliente           :
-                        :                       3 - Listar Todos os Veiculos                :
-                        :                                                                   :
-                        :                                                                   :
-                        : X - EXIT                                                          :
-                        :                                                                   :
-                        *********************************************************************
-                        """)
-
-                op = input("opcao?")
-                if op == "1":
-                    #TODO FUNCAO INSERIR VEICULO
-                    insert_veiculo(conn)
-                elif op == "2":
-                    #TODO FUNCAO LISTAR VEICULOS DE UM CLIENTE
-                    cliente_nif = input("Insira o NIF do Cliente: " )
-                    select_veiculo_cliente(conn, cliente_nif)
-                elif op == "3":
-                    #TODO FUNCAO LISTAR TODOS OS VEICULOS
-                    list_veiculos(conn)
-                elif op == "x":
-                    exit()
-        
-            elif op == "f":
-                #TODO FUNCAO CRIAR FATURA
-                print("""
-                        *********************************************************************
-                        :                (-: OFICINA DO ZÉ - MORTE AO IUC :-)               :
-                        *********************************************************************
-                        : FATURAS                                                           :
-                        :                       1 - Criar Nova Fatura                       :
-                        :                       2 - Listar Faturas De um CLiente            :
-                        :                       3 - Listar Todas as Faturas                 :
-                        :                                                                   :
-                        :                                                                   :
-                        : X - EXIT                                                          :
-                        :                                                                   :
-                        *********************************************************************
-                        """)
-
-                op = input("opcao?")
-                if op == "1":
-                    #TODO FUNCAO INSERIR FATURA
-                    cria_nova_fatura(conn)
-                elif op == "2":
-                    #TODO FUNCAO LISTAR FATURA DE UM CLIENTE
-                    cliente_nif = input("Insira o NIF do Cliente: " )
-                    faturas_cliente(conn,cliente_nif)
-                elif op == "3":
-                    #TODO FUNCAO LISTAR TODOS AS FATURAS
-                    imprime_lista_de_faturas(conn)
-                elif op == "x":
-                    exit()
     
 
 if __name__ == "__main__":
