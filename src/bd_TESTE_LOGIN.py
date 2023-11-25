@@ -43,7 +43,7 @@ def login(cursor, letra):
         if client:        
             
             
-            return True
+            return str(nif_input)
         else:
             print("Cliente não foi encontrado ou introduziu a senha incorretamente.")
             return False
@@ -80,7 +80,7 @@ if choice == 'c':
         print(cliente)
 
     cliente_encontrado = login(cursor, choice)
-    if cliente_encontrado == True:
+    if cliente_encontrado != "":
         print ('funcões do cliente')
 
 elif choice == 'e':
