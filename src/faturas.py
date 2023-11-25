@@ -50,8 +50,3 @@ def faturas_cliente(conn, cliente_nif):
 
     except sqlite3.Error as e:
         print(f"Erro: {e}")
-
-
-conn = sqlite3.connect('src/oficina.db')
-
-faturas_cliente(conn,3370)

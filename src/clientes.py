@@ -84,8 +84,3 @@ def select_informacao_cliente(conn, client_nif):
 
     except sqlite3.Error as e:
         print(f"Erro: {e}")
-    
-
-conn = sqlite3.connect('src/oficina.db')
-
-select_informacao_cliente(conn, 2222)
