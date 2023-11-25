@@ -83,10 +83,10 @@ def empregado(conn):
         """)
             opo = input("opcao?")
             if opo == "1":
-                # TODO Inserir novo cliente
+
                 inserir_novo_cliente(conn)
             elif opo == "2":
-                # TODO Listar todos os clientes
+
                 imprime_lista_de_clientes(conn)
   
             elif opo == "x":
@@ -111,14 +111,14 @@ def empregado(conn):
             """)
             opo = input("opcao?")
             if opo == "1":
-                # TODO Inserir novo veiculo
+
                 insert_veiculo(conn)
             elif opo == "2":
-                # TODO Listar veiculo de um cliente
+
                 client_nif = input("NIF do CLiente: ")
                 select_veiculo_cliente(conn, client_nif)
             elif opo == "3":
-                # TODO Listar todos os veiculos
+
                 list_veiculos(conn)
 
             elif opo == "x":
@@ -143,13 +143,13 @@ def empregado(conn):
             """)
             opo = input("opcao?")
             if opo == "1":
-                # TODO Criar um Nova Fatura
+
                 cria_nova_fatura(conn)
             elif opo == "2":
-                # TODO Listar Todas as Faturas
+
                 imprime_lista_de_faturas(conn)
             elif opo == "3":
-                # TODO Listar Faturas de um Cliente
+
                 client_nif = input("NIF do CLiente: ")
                 faturas_cliente(conn, client_nif)
                 
