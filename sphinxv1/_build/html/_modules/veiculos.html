@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>veiculos &mdash; Documentação ADC </title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=103ffe9a"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/translations.js?v=3b002d5c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Pesquisar" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ADC
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Pesquisar docs" aria-label="Pesquisar docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Menu de navegação">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../bd_DROPS_file.html">bd_DROPS_file module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bd_file.html">bd_file module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clientes.html">clientes module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../empregados.html">empregados module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faturas.html">faturas module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../veiculos.html">veiculos module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Menu de navegação móvel" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ADC</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Navegação da página">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Código do módulo</a></li>
+      <li class="breadcrumb-item active">veiculos</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Código fonte de veiculos</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">sqlite3</span>  
+
+<div class="viewcode-block" id="insert_veiculo">
+<a class="viewcode-back" href="../veiculos.html#veiculos.insert_veiculo">[documentos]</a>
+<span class="k">def</span> <span class="nf">insert_veiculo</span><span class="p">(</span><span class="n">conn</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Insere um veículo na tabela &#39;Veiculos&#39; da base de dados.</span>
+
+<span class="sd">    :param conn: Conexão ativa com o base de dados SQLite.</span>
+<span class="sd">    :type conn: sqlite3.Connection</span>
+<span class="sd">    :raises ValueError: Se o ano estiver fora do intervalo válido (1900-2023)</span>
+<span class="sd">                        ou se a quilometragem for negativa.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+        <span class="n">matricula</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Matricula: &quot;</span><span class="p">)</span>
+        <span class="n">modelo</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Modelo: &quot;</span><span class="p">)</span>
+        <span class="n">marca</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Marca: &quot;</span><span class="p">)</span>
+        <span class="n">ano</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Ano:  &quot;</span><span class="p">))</span>
+        <span class="n">km</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Km: &quot;</span><span class="p">))</span>
+        <span class="n">nome_motor</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Nome do Motor: &quot;</span><span class="p">)</span>
+        <span class="n">cliente_nif</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;NIF Cliente: &quot;</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">ano</span> <span class="o">&lt;</span> <span class="mi">1900</span> <span class="ow">or</span> <span class="n">ano</span> <span class="o">&gt;</span> <span class="mi">2023</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Ano inválido. Deve estar entre 1900 e 2023.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">km</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;A quilometragem não pode ser negativa.&quot;</span><span class="p">)</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">            INSERT INTO Veiculos (matricula, modelo, marca, ano, km, nome_motor, cliente_nif)</span>
+<span class="s1">            VALUES (?, ?, ?, ?, ?, ?, ?);</span>
+<span class="s1">        &#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">matricula</span><span class="p">,</span> <span class="n">modelo</span><span class="p">,</span> <span class="n">marca</span><span class="p">,</span> <span class="n">ano</span><span class="p">,</span> <span class="n">km</span><span class="p">,</span> <span class="n">nome_motor</span><span class="p">,</span> <span class="n">cliente_nif</span><span class="p">))</span>
+
+        <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Veiculo inserido com sucesso.&quot;</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Error</span> <span class="k">as</span> <span class="n">sqlite_error</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Erro no SQLite durante a execução da query: </span><span class="si">{</span><span class="n">sqlite_error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+
+    <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">value_error</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Erro nos dados inseridos: </span><span class="si">{</span><span class="n">value_error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Erro inesperado: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span></div>
+
+
+    
+
+
+
+<div class="viewcode-block" id="select_veiculo_cliente">
+<a class="viewcode-back" href="../veiculos.html#veiculos.select_veiculo_cliente">[documentos]</a>
+<span class="k">def</span> <span class="nf">select_veiculo_cliente</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">client_nif</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Seleciona os veículos de um cliente específico da tabela &#39;Veiculos&#39;.</span>
+
+<span class="sd">    :param conn: Conexão ativa com a base de dados SQLite.</span>
+<span class="sd">    :type conn: sqlite3.Connection</span>
+<span class="sd">    :param client_nif: NIF do cliente para o qual os veículos serão selecionados.</span>
+<span class="sd">    :type client_nif: int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">            SELECT * FROM Veiculos WHERE cliente_nif = ?;</span>
+<span class="s1">        &#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">client_nif</span><span class="p">,))</span>
+
+        <span class="n">carros</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">carros</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">carros do Cliente com o NIF: </span><span class="si">{</span><span class="n">client_nif</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Print header</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;Matricula&#39;</span><span class="si">:</span><span class="s2"> &lt;15</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot; | &quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;Modelo&#39;</span><span class="si">:</span><span class="s2"> &lt;20</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot; | &quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;Marca&#39;</span><span class="si">:</span><span class="s2"> &lt;15</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot; | &quot;</span> <span class="o">+</span>
+                  <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;Ano&#39;</span><span class="si">:</span><span class="s2"> &lt;5</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot; | &quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;KM&#39;</span><span class="si">:</span><span class="s2"> &lt;8</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot; | &quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;Nome do Motor&#39;</span><span class="si">:</span><span class="s2"> &lt;20</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            
+            <span class="k">for</span> <span class="n">carro</span> <span class="ow">in</span> <span class="n">carros</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">carro</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2"> &lt;15</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot; | &quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">carro</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2"> &lt;20</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot; | &quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">carro</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">:</span><span class="s2"> &lt;15</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot; | &quot;</span> <span class="o">+</span>
+                      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">carro</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">:</span><span class="s2"> &lt;5</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot; | &quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">carro</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="si">:</span><span class="s2"> &lt;8</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot; | &quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">carro</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="si">:</span><span class="s2"> &lt;20</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;O Cliente com o NIF: </span><span class="si">{</span><span class="n">client_nif</span><span class="si">}</span><span class="s2"> não tem carros&quot;</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Error</span> <span class="k">as</span> <span class="n">sqlite_error</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Erro no SQLite durante a execução da query: </span><span class="si">{</span><span class="n">sqlite_error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Erro inesperado: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+
+<div class="viewcode-block" id="list_veiculos">
+<a class="viewcode-back" href="../veiculos.html#veiculos.list_veiculos">[documentos]</a>
+<span class="k">def</span> <span class="nf">list_veiculos</span><span class="p">(</span><span class="n">conn</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Lista todos os veículos presentes na tabela &#39;Veiculos&#39; da base de dados.</span>
+
+<span class="sd">    :param conn: Conexão ativa com a base de dados SQLite.</span>
+<span class="sd">    :type conn: sqlite3.Connection</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">            SELECT * FROM Veiculos;</span>
+<span class="s1">        &#39;&#39;&#39;</span><span class="p">)</span>
+
+        <span class="n">veiculos</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">veiculos</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Todos os Veiculos:&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">veiculo</span> <span class="ow">in</span> <span class="n">veiculos</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Matricula: </span><span class="si">{</span><span class="n">veiculo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">, Modelo: </span><span class="si">{</span><span class="n">veiculo</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">, Marca: </span><span class="si">{</span><span class="n">veiculo</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">, Ano: </span><span class="si">{</span><span class="n">veiculo</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">}</span><span class="s2">, KM: </span><span class="si">{</span><span class="n">veiculo</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="si">}</span><span class="s2">, Nome do Motor: </span><span class="si">{</span><span class="n">veiculo</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="si">}</span><span class="s2">, Cliente NIF: </span><span class="si">{</span><span class="n">veiculo</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Não ouve veiculos encontrados na Tabela&quot;</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Error</span> <span class="k">as</span> <span class="n">sqlite_error</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Erro no SQLite durante a execução da query: </span><span class="si">{</span><span class="n">sqlite_error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Erro inesperado: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Lucas, Pedro, Ricardo, Gonçalo.</p>
+  </div>
+
+  Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    fornecido por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

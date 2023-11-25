@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>empregados &mdash; Documentação ADC </title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=103ffe9a"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/translations.js?v=3b002d5c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Pesquisar" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ADC
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Pesquisar docs" aria-label="Pesquisar docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Menu de navegação">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../bd_DROPS_file.html">bd_DROPS_file module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bd_file.html">bd_file module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clientes.html">clientes module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../empregados.html">empregados module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faturas.html">faturas module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../veiculos.html">veiculos module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Menu de navegação móvel" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ADC</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Navegação da página">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Código do módulo</a></li>
+      <li class="breadcrumb-item active">empregados</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Código fonte de empregados</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="kn">import</span> <span class="nn">getpass</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+
+<div class="viewcode-block" id="inserir_novo_empregado">
+<a class="viewcode-back" href="../empregados.html#empregados.inserir_novo_empregado">[documentos]</a>
+<span class="k">def</span> <span class="nf">inserir_novo_empregado</span><span class="p">(</span><span class="n">conn</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Insere um novo empregado na base de dados.</span>
+
+<span class="sd">    :param conn: Conexão à base de dados.</span>
+<span class="sd">    :type conn: sqlite3.Connection</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">empregados_data</span> <span class="o">=</span> <span class="p">[]</span>
+
+
+        <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM empregados;&quot;</span><span class="p">)</span>
+        <span class="n">empregados</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">EMPREGADOS:&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">empregado</span> <span class="ow">in</span> <span class="n">empregados</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">empregado</span><span class="p">)</span>
+
+        <span class="n">nome</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;EMPREGADO</span><span class="se">\n</span><span class="s2">Nome: &quot;</span><span class="p">)</span>
+        <span class="n">nif</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;NIF: &quot;</span><span class="p">)</span>
+        <span class="n">email</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Email: &quot;</span><span class="p">)</span>
+        <span class="n">password</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="s2">&quot;Password: &quot;</span><span class="p">)</span>
+
+        <span class="n">password_hash_empregado</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">password</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+                              <span class="c1"># NIF               NOME          EMAIL          PASSWORD</span>
+        <span class="n">empregados_data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">nif</span><span class="p">,</span> <span class="n">nome</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">password_hash_empregado</span><span class="p">))</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">executemany</span><span class="p">(</span><span class="s2">&quot;INSERT INTO empregados VALUES (?, ?, ?, ?)&quot;</span><span class="p">,</span> <span class="n">empregados_data</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">IntegrityError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ocorreu um erro. O empregado com o NIF: &#39;&quot;</span> <span class="o">+</span> <span class="n">nif</span> <span class="o">+</span> <span class="s2">&quot;&#39; já deve existir na BD.&quot;</span><span class="p">)</span>
+    
+    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="listar_empregados">
+<a class="viewcode-back" href="../empregados.html#empregados.listar_empregados">[documentos]</a>
+<span class="k">def</span> <span class="nf">listar_empregados</span><span class="p">(</span><span class="n">conn</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Lista todos os empregados na base de dados.</span>
+
+<span class="sd">    :param conn: Conexão à base de dados.</span>
+<span class="sd">    :type conn: sqlite3.Connection</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM empregados&#39;</span><span class="p">)</span>
+    <span class="n">registros</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">registros</span><span class="p">:</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:&lt;15}</span><span class="s2"> </span><span class="si">{:&lt;30}</span><span class="s2"> </span><span class="si">{:&lt;30}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;NIF&quot;</span><span class="p">,</span> <span class="s2">&quot;Nome&quot;</span><span class="p">,</span> <span class="s2">&quot;Email&quot;</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">110</span><span class="p">)</span>  
+
+
+        <span class="k">for</span> <span class="n">registro</span> <span class="ow">in</span> <span class="n">registros</span><span class="p">:</span>
+            <span class="n">nif</span><span class="p">,</span> <span class="n">nome</span><span class="p">,</span> <span class="n">email</span> <span class="o">=</span> <span class="n">registro</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:&lt;15}</span><span class="s2"> </span><span class="si">{:&lt;30}</span><span class="s2"> </span><span class="si">{:&lt;30}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nif</span><span class="p">,</span> <span class="n">nome</span><span class="p">,</span> <span class="n">email</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Nenhum registro encontrado na tabela empregados.&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="select_informacao_empregado">
+<a class="viewcode-back" href="../empregados.html#empregados.select_informacao_empregado">[documentos]</a>
+<span class="k">def</span> <span class="nf">select_informacao_empregado</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">empregado_nif</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Seleciona e exibe as informações de um empregado com base no NIF.</span>
+
+<span class="sd">    :param conn: Conexão à base de dados.</span>
+<span class="sd">    :type conn: sqlite3.Connection</span>
+<span class="sd">    :param empregado_nif: NIF do empregado a ser consultado.</span>
+<span class="sd">    :type empregado_nif: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">            SELECT * FROM empregados WHERE empregado_nif = ?;</span>
+<span class="s1">        &#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">empregado_nif</span><span class="p">,))</span>
+
+        <span class="n">empregado_info</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">empregado_info</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Informação do Empregado:&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;NIF: </span><span class="si">{</span><span class="n">empregado_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Nome: </span><span class="si">{</span><span class="n">empregado_info</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Email: </span><span class="si">{</span><span class="n">empregado_info</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+           
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Empregado com NIF </span><span class="si">{</span><span class="n">empregado_nif</span><span class="si">}</span><span class="s2"> não encontrado.&quot;</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Erro: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Lucas, Pedro, Ricardo, Gonçalo.</p>
+  </div>
+
+  Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    fornecido por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>bd_file &mdash; Documentação ADC </title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=103ffe9a"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/translations.js?v=3b002d5c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Pesquisar" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ADC
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Pesquisar docs" aria-label="Pesquisar docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Menu de navegação">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../bd_DROPS_file.html">bd_DROPS_file module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bd_file.html">bd_file module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clientes.html">clientes module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../empregados.html">empregados module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faturas.html">faturas module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../veiculos.html">veiculos module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Menu de navegação móvel" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ADC</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Navegação da página">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Código do módulo</a></li>
+      <li class="breadcrumb-item active">bd_file</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Código fonte de bd_file</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+
+<div class="viewcode-block" id="hash_password">
+<a class="viewcode-back" href="../bd_file.html#bd_file.hash_password">[documentos]</a>
+<span class="k">def</span> <span class="nf">hash_password</span><span class="p">(</span><span class="n">password</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Retorna o hash SHA-256 da senha fornecida.</span>
+
+<span class="sd">    :param password: A senha a ser criptografada.</span>
+<span class="sd">    :type password: str</span>
+<span class="sd">    :return: O hash SHA-256 da senha.</span>
+<span class="sd">    :rtype: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">password</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="creates_bd">
+<a class="viewcode-back" href="../bd_file.html#bd_file.creates_bd">[documentos]</a>
+<span class="k">def</span> <span class="nf">creates_bd</span><span class="p">(</span><span class="n">conn</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Cria as tabelas na base de dados.</span>
+
+<span class="sd">    Esta função cria as tabelas na base de dados SQLite &#39;oficina.db&#39; localizada no diretório &#39;src&#39;.</span>
+<span class="sd">    As tabelas criadas são Veiculos, clientes, empregados e faturas se elas ainda não existirem.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        conn: Objeto de conexão com a base de dados.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        OperationalError: Se ocorrer um erro ao criar as tabelas.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># CONEXAO</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;src/oficina.db&#39;</span><span class="p">)</span>
+
+    <span class="c1"># CURSOR PARA EXECUTAR QUERYS</span>
+    <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+    <span class="c1"># TABELA Veiculos</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">        CREATE TABLE IF NOT EXISTS Veiculos (</span>
+<span class="s1">            matricula TEXT PRIMARY KEY,</span>
+<span class="s1">            modelo TEXT,</span>
+<span class="s1">            marca TEXT,</span>
+<span class="s1">            ano INTEGER,</span>
+<span class="s1">            km INTEGER,</span>
+<span class="s1">            nome_motor TEXT,</span>
+<span class="s1">            cliente_nif INTEGER,</span>
+<span class="s1">            FOREIGN KEY (cliente_nif) REFERENCES clientes(nif)</span>
+<span class="s1">        );</span>
+<span class="s1">    &#39;&#39;&#39;</span><span class="p">)</span>
+
+    <span class="c1"># TABELA clientes</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">        CREATE TABLE IF NOT EXISTS clientes (</span>
+<span class="s1">            nif INTEGER PRIMARY KEY,</span>
+<span class="s1">            name TEXT,</span>
+<span class="s1">            email TEXT,</span>
+<span class="s1">            telefone TEXT,</span>
+<span class="s1">            password_hash TEXT</span>
+<span class="s1">        );</span>
+<span class="s1">    &#39;&#39;&#39;</span><span class="p">)</span>
+
+    <span class="c1"># TABELA empregados</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">        CREATE TABLE IF NOT EXISTS empregados (</span>
+<span class="s1">            empregado_nif INTEGER PRIMARY KEY,</span>
+<span class="s1">            name TEXT,</span>
+<span class="s1">            email TEXT,</span>
+<span class="s1">            password_hash TEXT</span>
+<span class="s1">        );</span>
+<span class="s1">    &#39;&#39;&#39;</span><span class="p">)</span>
+
+    <span class="c1"># TABELA faturas</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">        CREATE TABLE IF NOT EXISTS faturas (</span>
+<span class="s1">            id INTEGER PRIMARY KEY,</span>
+<span class="s1">            cliente_nif INTEGER,</span>
+<span class="s1">            data_criacao DATE DEFAULT CURRENT_DATE,</span>
+<span class="s1">            descricao TEXT,</span>
+<span class="s1">            valor REAL,</span>
+<span class="s1">            FOREIGN KEY (cliente_nif) REFERENCES clientes(nif)</span>
+<span class="s1">        );</span>
+<span class="s1">        &#39;&#39;&#39;</span><span class="p">)</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>  <span class="c1"># COMMIT</span></div>
+
+
+<span class="c1">#conn = sqlite3.connect(&#39;src/oficina.db&#39;)</span>
+<span class="c1">#creates_bd()</span>
+
+
+<span class="c1">#-----------------------------------INSERTS RANDOM-----------------------------------------------</span>
+<div class="viewcode-block" id="inserts_random">
+<a class="viewcode-back" href="../bd_file.html#bd_file.inserts_random">[documentos]</a>
+<span class="k">def</span> <span class="nf">inserts_random</span><span class="p">(</span><span class="n">conn</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Insere dados aleatórios nas tabelas.</span>
+
+<span class="sd">    Esta função insere dados fictícios nas tabelas Veiculos, clientes e faturas na base de dados SQLite</span>
+<span class="sd">    utilizando uma conexão fornecida.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        conn: Objeto de conexão com a base de dados.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">veiculos_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">clientes_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">empregados_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">faturas_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+    <span class="n">cliente_random_1</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">9999</span><span class="p">)</span>
+    <span class="n">cliente_random_2</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">9999</span><span class="p">)</span>
+
+    <span class="c1">#INSERT EMPREGADOS-----------------------------------------------</span>
+    <span class="c1">#INSERT EMPREGADOS-----------------------------------------------</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+        <span class="n">password_empregado</span> <span class="o">=</span> <span class="s2">&quot;password_empregado&quot;</span> 
+        <span class="n">password_hash_empregado</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">password_empregado</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+        <span class="n">empregados_data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">e</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Empregado</span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;empregado</span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">@email.com&#39;</span><span class="p">,</span> <span class="n">password_hash_empregado</span><span class="p">))</span>
+
+    <span class="n">cursor</span><span class="o">.</span><span class="n">executemany</span><span class="p">(</span><span class="s2">&quot;INSERT INTO empregados VALUES (?, ?, ?, ?)&quot;</span><span class="p">,</span> <span class="n">empregados_data</span><span class="p">)</span>
+    <span class="c1">#---------------------------------------------------------------</span>
+
+    <span class="c1">#INSERT CLIENTES-----------------------------------------------</span>
+    <span class="n">password_cliente</span> <span class="o">=</span> <span class="s2">&quot;password_cliente&quot;</span>
+    <span class="n">password_hash_cliente</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">password_cliente</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+
+    <span class="c1">#CLIENTE 1</span>
+    <span class="n">password_hash_cliente</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">password_cliente</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+    <span class="n">clientes_data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">cliente_random_1</span><span class="p">,</span><span class="s1">&#39;Cliente1&#39;</span><span class="p">,</span> <span class="s1">&#39;cliente1@email.com&#39;</span><span class="p">,</span> <span class="s1">&#39;123456789&#39;</span><span class="p">,</span> <span class="n">password_hash_cliente</span><span class="p">))</span>
+
+    <span class="c1">#CLIENTE 2 </span>
+    <span class="n">password_hash_cliente</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">password_cliente</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+    <span class="n">clientes_data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">cliente_random_2</span><span class="p">,</span><span class="s1">&#39;Cliente2&#39;</span><span class="p">,</span> <span class="s1">&#39;cliente2@email.com&#39;</span><span class="p">,</span> <span class="s1">&#39;987654321&#39;</span><span class="p">,</span> <span class="n">password_hash_cliente</span><span class="p">))</span>
+
+    <span class="c1">#--------------------------------------------------------------</span>
+    <span class="c1">#INSERT MATRICULAS---------------------------------------------</span>
+    <span class="n">matricula_random_1</span> <span class="o">=</span> <span class="s2">&quot;ABC_200&quot;</span>
+    <span class="n">matricula_random_2</span> <span class="o">=</span> <span class="s2">&quot;CBA_300&quot;</span>
+
+    <span class="c1">#MATRICULA 1</span>
+    <span class="n">veiculos_data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">matricula_random_1</span><span class="p">,</span> <span class="s1">&#39;Modelo1&#39;</span><span class="p">,</span> <span class="s1">&#39;Marca1&#39;</span><span class="p">,</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">50000</span><span class="p">,</span> <span class="s1">&#39;Motor1&#39;</span><span class="p">,</span> <span class="n">cliente_random_1</span><span class="p">))</span>
+
+    <span class="c1">#MATRICULA 2</span>
+    <span class="n">veiculos_data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">matricula_random_2</span><span class="p">,</span> <span class="s1">&#39;Modelo2&#39;</span><span class="p">,</span> <span class="s1">&#39;Marca2&#39;</span><span class="p">,</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">50000</span><span class="p">,</span> <span class="s1">&#39;Motor2&#39;</span><span class="p">,</span> <span class="n">cliente_random_2</span><span class="p">))</span>
+
+    <span class="c1">#--------------------------------------------------------------</span>
+    <span class="c1">#INSERT FATURAS------------------------------------------------</span>
+
+    <span class="n">faturas_random_1</span> <span class="o">=</span> <span class="mi">111</span>
+    <span class="n">faturas_random_2</span> <span class="o">=</span> <span class="mi">222</span>
+
+    <span class="c1">#FATURA 1</span>
+    <span class="n">faturas_data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">faturas_random_1</span><span class="p">,</span> <span class="n">cliente_random_1</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="s1">&#39;Servico1&#39;</span><span class="p">,</span> <span class="mf">100.00</span><span class="p">))</span>
+
+    <span class="c1">#FATURA 2</span>
+    <span class="n">faturas_data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">faturas_random_2</span><span class="p">,</span> <span class="n">cliente_random_2</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="s1">&#39;Servico2&#39;</span><span class="p">,</span> <span class="mf">200.00</span><span class="p">))</span>
+
+    <span class="n">cursor</span><span class="o">.</span><span class="n">executemany</span><span class="p">(</span><span class="s2">&quot;INSERT INTO Veiculos VALUES (?, ?, ?, ?, ?, ?, ?)&quot;</span><span class="p">,</span> <span class="n">veiculos_data</span><span class="p">)</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">executemany</span><span class="p">(</span><span class="s2">&quot;INSERT INTO clientes VALUES (?, ?, ?, ?, ?)&quot;</span><span class="p">,</span> <span class="n">clientes_data</span><span class="p">)</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">executemany</span><span class="p">(</span><span class="s2">&quot;INSERT INTO faturas VALUES (?, ?, ?, ?, ?)&quot;</span><span class="p">,</span> <span class="n">faturas_data</span><span class="p">)</span>
+
+    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>  <span class="c1"># COMMIT</span></div>
+
+
+<span class="c1">#conn = sqlite3.connect(&#39;src/oficina.db&#39;)</span>
+<span class="c1">#inserts_random(conn)</span>
+<div class="viewcode-block" id="listar_tabelas">
+<a class="viewcode-back" href="../bd_file.html#bd_file.listar_tabelas">[documentos]</a>
+<span class="k">def</span> <span class="nf">listar_tabelas</span><span class="p">(</span><span class="n">conn</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Lista o conteúdo das tabelas na base de dados.</span>
+
+<span class="sd">    Esta função realiza uma seleção de todos os registros em cada tabela</span>
+<span class="sd">    (Veiculos, clientes, empregados, faturas) na base de dados e exibe</span>
+<span class="sd">    o conteúdo de cada uma.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        conn: Objeto de conexão com a base de dados.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+    <span class="c1"># LISTAR (SELECT)</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM Veiculos;&quot;</span><span class="p">)</span>
+    <span class="n">veiculos</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">VEICULOS:&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">veiculo</span> <span class="ow">in</span> <span class="n">veiculos</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">veiculo</span><span class="p">)</span>
+
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM clientes;&quot;</span><span class="p">)</span>
+    <span class="n">clientes</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">CLIENTES:&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">cliente</span> <span class="ow">in</span> <span class="n">clientes</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">cliente</span><span class="p">)</span>
+
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM empregados;&quot;</span><span class="p">)</span>
+    <span class="n">empregados</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">EMPREGADO:&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">empregados</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM faturas;&quot;</span><span class="p">)</span>
+    <span class="n">faturas</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">FATURAS:&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">fatura</span> <span class="ow">in</span> <span class="n">faturas</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">fatura</span><span class="p">)</span>
+
+    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>  <span class="c1"># COMMIT</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>   <span class="c1"># FECHAR A CONEXAO</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Lucas, Pedro, Ricardo, Gonçalo.</p>
+  </div>
+
+  Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    fornecido por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

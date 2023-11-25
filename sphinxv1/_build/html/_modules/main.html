@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>main &mdash; Documentação ADC </title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=103ffe9a"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/translations.js?v=3b002d5c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Pesquisar" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ADC
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Pesquisar docs" aria-label="Pesquisar docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Menu de navegação">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../bd_DROPS_file.html">bd_DROPS_file module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bd_file.html">bd_file module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clientes.html">clientes module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../empregados.html">empregados module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faturas.html">faturas module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../veiculos.html">veiculos module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Menu de navegação móvel" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ADC</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Navegação da página">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Código do módulo</a></li>
+      <li class="breadcrumb-item active">main</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Código fonte de main</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">clientes</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">faturas</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">veiculos</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">empregados</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">getpass</span>
+
+
+<div class="viewcode-block" id="cliente">
+<a class="viewcode-back" href="../main.html#main.cliente">[documentos]</a>
+<span class="k">def</span> <span class="nf">cliente</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">logged_user</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Interface para acesso do cliente às informações.</span>
+
+<span class="sd">    Esta função representa uma interface de usuário para clientes acessarem informações relacionadas às suas contas</span>
+<span class="sd">    na oficina. Ela permite que o cliente visualize seus dados pessoais, veículos e faturas, bem como oferece a opção</span>
+<span class="sd">    de sair da interface.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        conn: Objeto de conexão com a base de dados.</span>
+<span class="sd">        logged_user: Dados do usuário logado (cliente) atualmente na interface.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span> 
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    *********************************************************************</span>
+<span class="s2">    :                (-: OFICINA DO ZÉ - MORTE AO IUC :-)               :</span>
+<span class="s2">    *********************************************************************</span>
+<span class="s2">    : LOGIN CLIENTES                                                    :</span>
+<span class="s2">    :                           1 - Ver os Meus Dados                   :</span>
+<span class="s2">    :                           2 - Ver os Meus Veiculos                :</span>
+<span class="s2">    :                           3 - Ver as Minhas Faturas               :</span>
+<span class="s2">    :                                                                   :</span>
+<span class="s2">    :                                                                   :</span>
+<span class="s2">    :  X -EXIT                                                          :</span>
+<span class="s2">    :                                                                   :</span>
+<span class="s2">    *********************************************************************</span>
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
+        <span class="n">opc</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;opcao?&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">opc</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">:</span>
+            <span class="c1"># Ver os Meus Dados</span>
+            <span class="n">client_nif</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">logged_user</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+            <span class="n">select_informacao_cliente</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">client_nif</span><span class="p">)</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="n">opc</span> <span class="o">==</span> <span class="s1">&#39;2&#39;</span><span class="p">:</span>
+            <span class="c1"># Ver os Meus Veiculos</span>
+            <span class="n">client_nif</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">logged_user</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+            <span class="n">select_veiculo_cliente</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">client_nif</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">opc</span> <span class="o">==</span> <span class="s2">&quot;3&quot;</span><span class="p">:</span>
+            <span class="c1"># Ver as Minhas Faturas</span>
+            <span class="n">client_nif</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">logged_user</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+            <span class="n">faturas_cliente</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">client_nif</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">opc</span> <span class="o">==</span> <span class="s2">&quot;R&quot;</span> <span class="ow">or</span> <span class="n">opc</span> <span class="o">==</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span>
+            <span class="n">logged_user</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">elif</span> <span class="n">opc</span> <span class="o">==</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span>
+            <span class="n">exit</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="empregado">
+<a class="viewcode-back" href="../main.html#main.empregado">[documentos]</a>
+<span class="k">def</span> <span class="nf">empregado</span><span class="p">(</span><span class="n">conn</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Interface para acesso às opções dos funcionários na oficina.</span>
+
+<span class="sd">    Esta função representa uma interface de usuário para funcionários da oficina. </span>
+<span class="sd">    Permite que eles acessem diferentes seções do sistema, como clientes, veículos e faturas, </span>
+<span class="sd">    fornecendo opções específicas dentro de cada seção.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        conn: Objeto de conexão com a base de dados.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    *********************************************************************</span>
+<span class="s2">    :                (-: OFICINA DO ZÉ - MORTE AO IUC :-)               :</span>
+<span class="s2">    *********************************************************************</span>
+<span class="s2">    : MENU EMPREGADOS                                                   :</span>
+<span class="s2">    :                                                                   :</span>
+<span class="s2">    :                                                                   :</span>
+<span class="s2">    :                            1 - CLIENTES                           :</span>
+<span class="s2">    :                            2 - VEICULOS                           :</span>
+<span class="s2">    :                            3 - FATURAS                            :                                                                  </span>
+<span class="s2">    :                                                                   :</span>
+<span class="s2">    :                                                                   :</span>
+<span class="s2">    :                                                                   :</span>
+<span class="s2">    : X - EXIT                                                          :</span>
+<span class="s2">    :                                                                   :</span>
+<span class="s2">    *********************************************************************</span>
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
+        <span class="n">ope</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;opcao?&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ope</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        *********************************************************************</span>
+<span class="s2">        :                (-: OFICINA DO ZÉ - MORTE AO IUC :-)               :</span>
+<span class="s2">        *********************************************************************</span>
+<span class="s2">        : MENU EMPREGADOS                                                   :</span>
+<span class="s2">        :                                                                   :</span>
+<span class="s2">        :                                                                   :</span>
+<span class="s2">        :                       1 - Inserir Novo Cliente                    :</span>
+<span class="s2">        :                       2 - Listar Todos os Clientes                :</span>
+<span class="s2">        :                                                                   :                                                                  </span>
+<span class="s2">        :                                                                   :</span>
+<span class="s2">        :                                                                   :</span>
+<span class="s2">        :X - EXIT                                                           :</span>
+<span class="s2">        :                                                                   :</span>
+<span class="s2">        *********************************************************************</span>
+<span class="s2">        &quot;&quot;&quot;</span><span class="p">)</span>
+            <span class="n">opo</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;opcao?&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">opo</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>
+
+                <span class="n">inserir_novo_cliente</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">opo</span> <span class="o">==</span> <span class="s2">&quot;2&quot;</span><span class="p">:</span>
+
+                <span class="n">imprime_lista_de_clientes</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+  
+            <span class="k">elif</span> <span class="n">opo</span> <span class="o">==</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span>
+                <span class="n">exit</span><span class="p">()</span>
+
+        <span class="k">elif</span> <span class="n">ope</span> <span class="o">==</span> <span class="s2">&quot;2&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            *********************************************************************</span>
+<span class="s2">            :                (-: OFICINA DO ZÉ - MORTE AO IUC :-)               :</span>
+<span class="s2">            *********************************************************************</span>
+<span class="s2">            : MENU EMPREGADOS                                                   :</span>
+<span class="s2">            :                                                                   :</span>
+<span class="s2">            :                                                                   :</span>
+<span class="s2">            :                   1 - Inserir novo Veiculo                        :</span>
+<span class="s2">            :                   2 - Listar Veiculo de um Cliente                :</span>
+<span class="s2">            :                   3 - Listar todos os Veiculo                     :                                                                  </span>
+<span class="s2">            :                                                                   :</span>
+<span class="s2">            :                                                                   :</span>
+<span class="s2">            :X -EXIT                                                            :</span>
+<span class="s2">            :                                                                   :</span>
+<span class="s2">            *********************************************************************</span>
+<span class="s2">            &quot;&quot;&quot;</span><span class="p">)</span>
+            <span class="n">opo</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;opcao?&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">opo</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>
+
+                <span class="n">insert_veiculo</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">opo</span> <span class="o">==</span> <span class="s2">&quot;2&quot;</span><span class="p">:</span>
+
+                <span class="n">client_nif</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;NIF do CLiente: &quot;</span><span class="p">)</span>
+                <span class="n">select_veiculo_cliente</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">client_nif</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">opo</span> <span class="o">==</span> <span class="s2">&quot;3&quot;</span><span class="p">:</span>
+
+                <span class="n">list_veiculos</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">opo</span> <span class="o">==</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span>
+                <span class="n">exit</span><span class="p">()</span>
+
+        <span class="k">elif</span> <span class="n">ope</span> <span class="o">==</span> <span class="s2">&quot;3&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            *********************************************************************</span>
+<span class="s2">            :                (-: OFICINA DO ZÉ - MORTE AO IUC :-)               :</span>
+<span class="s2">            *********************************************************************</span>
+<span class="s2">            : MENU EMPREGADOS                                                   :</span>
+<span class="s2">            :                                                                   :</span>
+<span class="s2">            :                                                                   :</span>
+<span class="s2">            :                    1 - Criar um Nova Fatura                       :</span>
+<span class="s2">            :                    2 - Listar Todas as Faturas                    :</span>
+<span class="s2">            :                    3 - Listar Faturas de um Cliente               :                                                                  </span>
+<span class="s2">            :                                                                   :</span>
+<span class="s2">            :                                                                   :</span>
+<span class="s2">            : X - EXIT                                                          :</span>
+<span class="s2">            :                                                                   :</span>
+<span class="s2">            *********************************************************************</span>
+<span class="s2">            &quot;&quot;&quot;</span><span class="p">)</span>
+            <span class="n">opo</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;opcao?&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">opo</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>
+
+                <span class="n">cria_nova_fatura</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">opo</span> <span class="o">==</span> <span class="s2">&quot;2&quot;</span><span class="p">:</span>
+
+                <span class="n">imprime_lista_de_faturas</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">opo</span> <span class="o">==</span> <span class="s2">&quot;3&quot;</span><span class="p">:</span>
+
+                <span class="n">client_nif</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;NIF do CLiente: &quot;</span><span class="p">)</span>
+                <span class="n">faturas_cliente</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">client_nif</span><span class="p">)</span>
+                
+
+            <span class="k">elif</span> <span class="n">opo</span> <span class="o">==</span> <span class="s2">&quot;R&quot;</span> <span class="ow">or</span> <span class="n">opo</span> <span class="o">==</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+            <span class="k">elif</span> <span class="n">opo</span> <span class="o">==</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span>
+                <span class="n">exit</span><span class="p">()</span>      
+
+        <span class="k">elif</span> <span class="n">ope</span> <span class="o">==</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span>
+            <span class="n">exit</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="hash_password">
+<a class="viewcode-back" href="../main.html#main.hash_password">[documentos]</a>
+<span class="k">def</span> <span class="nf">hash_password</span><span class="p">(</span><span class="n">password</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Cria um hash SHA256 da senha fornecida.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        password (str): Senha a ser convertida em hash.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: Hash SHA256 da senha.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">password</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="login">
+<a class="viewcode-back" href="../main.html#main.login">[documentos]</a>
+<span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="n">letra</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Realiza o login de clientes ou empregados no sistema.</span>
+
+<span class="sd">    Esta função permite que clientes (letra &#39;c&#39;) e empregados (letra &#39;e&#39;) façam login no sistema,</span>
+<span class="sd">    verificando as credenciais fornecidas no banco de dados.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        cursor: Cursor para executar consultas no banco de dados.</span>
+<span class="sd">        letra (str): Letra identificadora (&#39;c&#39; para cliente, &#39;e&#39; para empregado).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict or False: Um dicionário com informações de autenticação se o login for bem-sucedido.</span>
+<span class="sd">            O dicionário contém &#39;type&#39; (tipo: &#39;client&#39; ou &#39;employee&#39;) e &#39;id&#39; (identificação).</span>
+<span class="sd">            Retorna False se o login falhar.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># INPUTS</span>
+    <span class="n">nif_input</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;|LOGIN|</span><span class="se">\n</span><span class="s2"> NIF: &quot;</span><span class="p">)</span>
+    <span class="n">password_input</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getpass</span><span class="p">(</span><span class="s2">&quot;Password: &quot;</span><span class="p">)</span>
+
+    <span class="n">hashed_password_input</span> <span class="o">=</span> <span class="n">hash_password</span><span class="p">(</span><span class="n">password_input</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">letra</span> <span class="o">==</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span>
+        <span class="c1"># CHECK CLIENT</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM clientes WHERE nif = ? AND password_hash = ?&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">nif_input</span><span class="p">,</span> <span class="n">hashed_password_input</span><span class="p">))</span>
+        <span class="n">client</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">client</span><span class="p">:</span>        
+            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;client&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">nif_input</span><span class="p">)}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cliente não foi encontrado ou introduziu a senha incorretamente.&quot;</span><span class="p">)</span>
+            <span class="n">exit</span><span class="p">()</span>
+
+    <span class="k">elif</span> <span class="n">letra</span> <span class="o">==</span> <span class="s1">&#39;e&#39;</span><span class="p">:</span>
+        <span class="c1"># CHECK empregado</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM empregados WHERE empregado_nif = ? AND password_hash = ?&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">nif_input</span><span class="p">,</span> <span class="n">hashed_password_input</span><span class="p">))</span>
+        <span class="n">empregado</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+ 
+        <span class="k">if</span> <span class="n">empregado</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;employee&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">nif_input</span><span class="p">)}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Empregado não foi encontrado ou introduziu a senha incorretamente.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="menu">
+<a class="viewcode-back" href="../main.html#main.menu">[documentos]</a>
+<span class="k">def</span> <span class="nf">menu</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exibe o menu principal da aplicação e direciona para os submenus de login de clientes e empregados.</span>
+
+<span class="sd">    O menu principal permite escolher entre realizar login como cliente ou empregado,</span>
+<span class="sd">    redirecionando para os menus correspondentes.</span>
+
+<span class="sd">    As opções disponíveis:</span>
+<span class="sd">    1. Cliente: Redireciona para o submenu de login ou criação de conta para clientes.</span>
+<span class="sd">    2. Empregado: Realiza o login como empregado.</span>
+<span class="sd">    X: Sai da aplicação.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># CONEXAO</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;src/oficina.db&#39;</span><span class="p">)</span>
+
+    <span class="c1"># CURSOR PARA EXECUTAR QUERYS</span>
+    <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Menu principal da aplicação&quot;&quot;&quot;</span>
+        
+
+        <span class="n">logged_user</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            *********************************************************************</span>
+<span class="s2">            :                (-: OFICINA DO ZÉ - MORTE AO IUC :-)               :</span>
+<span class="s2">            *********************************************************************</span>
+<span class="s2">            : LOGIN                                                             :</span>
+<span class="s2">            :                           1 - Cliente                             :</span>
+<span class="s2">            :                           2 - Empregado                           :</span>
+<span class="s2">            :                                                                   :</span>
+<span class="s2">            :                                                                   :</span>
+<span class="s2">            :                                                                   :</span>
+<span class="s2">            :  X - EXIT                                                         :</span>
+<span class="s2">            :                                                                   :</span>
+<span class="s2">            *********************************************************************</span>
+<span class="s2">            &quot;&quot;&quot;</span><span class="p">)</span>
+
+        <span class="n">op</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;opcao?&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>
+            <span class="c1"># Entrar em Login Clientes  </span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            *********************************************************************</span>
+<span class="s2">            :                (-: OFICINA DO ZÉ - MORTE AO IUC :-)               :</span>
+<span class="s2">            *********************************************************************</span>
+<span class="s2">            : LOGIN CLIENTES                                                    :</span>
+<span class="s2">            :                           c - Login                               :</span>
+<span class="s2">            :                           cc - Criar Conta                        :</span>
+<span class="s2">            :                                                                   :</span>
+<span class="s2">            :                                                                   :</span>
+<span class="s2">            :                                                                   :</span>
+<span class="s2">            : X - EXIT                                                          :</span>
+<span class="s2">            :                                                                   :</span>
+<span class="s2">            *********************************************************************</span>
+<span class="s2">            &quot;&quot;&quot;</span><span class="p">)</span>
+            <span class="n">opc</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;opcao?&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">opc</span> <span class="o">==</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span>
+                <span class="c1"># Login Clientes</span>
+                <span class="n">logged_user</span> <span class="o">=</span> <span class="n">login</span><span class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="n">opc</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">logged_user</span> <span class="ow">and</span> <span class="n">logged_user</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;client&#39;</span><span class="p">:</span>
+                    <span class="n">cliente</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span><span class="n">logged_user</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Login falhou. Cliente não encontrado ou senha incorreta.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">opc</span> <span class="o">==</span> <span class="s1">&#39;cc&#39;</span><span class="p">:</span>
+                <span class="n">inserir_novo_cliente</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+        
+        <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s1">&#39;2&#39;</span><span class="p">:</span>
+            <span class="c1"># Entrar em Empregados</span>
+            <span class="n">empregado_encontrado</span> <span class="o">=</span> <span class="n">login</span><span class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="n">op</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">empregado_encontrado</span> <span class="o">!=</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="n">empregado</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="s1">&#39;x&#39;</span><span class="p">:</span>
+            <span class="n">exit</span><span class="p">()</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">menu</span><span class="p">()</span>
+
+
+            
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Lucas, Pedro, Ricardo, Gonçalo.</p>
+  </div>
+
+  Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    fornecido por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
