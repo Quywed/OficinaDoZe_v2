@@ -12,9 +12,9 @@ sys.path.insert(0, os.path.abspath('../src'))
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'OficinaDoZe_v2'
-copyright = '2023, Quywed'
-author = 'Quywed'
-release = '0.1'
+copyright = '2023, O grupo 4 ou 3 nem seiuywed'
+author = 'O grupo 4 ou 3 nem sei.'
+release = '420.1'
 
 
 # -- General configuration ---------------------------------------------------
@@ -28,7 +28,7 @@ extensions = [
 
 html_theme = 'sphinx_rtd_theme'
 templates_path = ['_templates']
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'bd_file.py']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'bd_file.py', 'oficina.db']
 
 
 language = 'pt'

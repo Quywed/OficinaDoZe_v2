@@ -5,10 +5,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>veiculos module &#8212; Documentação OficinaDoZe_v2 0.1</title>
+    <title>veiculos module &#8212; Documentação OficinaDoZe_v2 420.1</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
-    <script src="_static/documentation_options.js?v=6e1fffae"></script>
+    <script src="_static/documentation_options.js?v=f451a8eb"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/translations.js?v=3b002d5c"></script>
@@ -36,10 +36,10 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="veiculos.insert_veiculo">
 <span class="sig-prename descclassname"><span class="pre">veiculos.</span></span><span class="sig-name descname"><span class="pre">insert_veiculo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conn</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/veiculos.html#insert_veiculo"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#veiculos.insert_veiculo" title="Link to this definition">¶</a></dt>
-<dd><p>Insere um veículo na tabela “Veiculos” do banco de dados.</p>
+<dd><p>Insere um veículo na tabela “Veiculos” da base de dados.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parâmetros<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>conn</strong> (<em>sqlite3.Connection</em>) – Conexão ativa com o banco de dados SQLite.</p>
+<dd class="field-odd"><p><strong>conn</strong> (<em>sqlite3.Connection</em>) – Conexão ativa com o base de dados SQLite.</p>
 </dd>
 <dt class="field-even">Levanta<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>ValueError</strong> – Se o ano estiver fora do intervalo válido (1900-2023)
@@ -51,10 +51,10 @@ ou se a quilometragem for negativa.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="veiculos.list_veiculos">
 <span class="sig-prename descclassname"><span class="pre">veiculos.</span></span><span class="sig-name descname"><span class="pre">list_veiculos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conn</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/veiculos.html#list_veiculos"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#veiculos.list_veiculos" title="Link to this definition">¶</a></dt>
-<dd><p>Lista todos os veículos presentes na tabela “Veiculos” do banco de dados.</p>
+<dd><p>Lista todos os veículos presentes na tabela “Veiculos” da base de dados.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parâmetros<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>conn</strong> (<em>sqlite3.Connection</em>) – Conexão ativa com o banco de dados SQLite.</p>
+<dd class="field-odd"><p><strong>conn</strong> (<em>sqlite3.Connection</em>) – Conexão ativa com a base de dados SQLite.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -66,7 +66,7 @@ ou se a quilometragem for negativa.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parâmetros<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>conn</strong> (<em>sqlite3.Connection</em>) – Conexão ativa com o banco de dados SQLite.</p></li>
+<li><p><strong>conn</strong> (<em>sqlite3.Connection</em>) – Conexão ativa com a base de dados SQLite.</p></li>
 <li><p><strong>client_nif</strong> (<em>int</em>) – NIF do cliente para o qual os veículos serão selecionados.</p></li>
 </ul>
 </dd>
@@ -137,7 +137,7 @@ ou se a quilometragem for negativa.</p>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2023, Quywed.
+      &copy;2023, O grupo 4 ou 3 nem seiuywed.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
