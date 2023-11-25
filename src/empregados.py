@@ -53,6 +53,28 @@ def listar_empregados(conn):
     else:
         print("Nenhum registro encontrado na tabela empregados.")
 
+def select_informacao_empregado(conn, empregado_nif):
+    try:
+        cursor = conn.cursor()
+
+        cursor.execute('''
+            SELECT * FROM empregados WHERE empregado_nif = ?;
+        ''', (empregado_nif,))
+
+        empregado_info = cursor.fetchone()
+
+        if empregado_info:
+            print("\nInformação do Empregado:")
+            print(f"NIF: {empregado_info[0]}")
+            print(f"Nome: {empregado_info[1]}")
+            print(f"Email: {empregado_info[2]}")
+
+           
+        else:
+            print(f"Empregado com NIF {empregado_nif} não encontrado.")
+
+    except sqlite3.Error as e:
+        print(f"Erro: {e}")
 
 
 
