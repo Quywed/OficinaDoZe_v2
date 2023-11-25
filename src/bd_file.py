@@ -4,6 +4,14 @@ import random
 import hashlib
 
 def hash_password(password):
+    """
+    Retorna o hash SHA-256 da senha fornecida.
+
+    :param password: A senha a ser criptografada.
+    :type password: str
+    :return: O hash SHA-256 da senha.
+    :rtype: str
+    """
     return hashlib.sha256(password.encode()).hexdigest()
 
 # CONEXAO

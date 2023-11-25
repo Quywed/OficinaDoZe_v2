@@ -3,6 +3,13 @@ import sqlite3
 
 
 def cria_nova_fatura(conn):
+    """
+    Cria uma nova fatura na base de dados.
+
+    :param conn: Conexão ativa com a base de dados SQLite.
+    :type conn: sqlite3.Connection
+    """
+
     cursor = conn.cursor()
 
     cliente_nif = int(input("NIF Cliente: "))  
@@ -17,6 +24,13 @@ def cria_nova_fatura(conn):
     conn.commit()
 
 def imprime_lista_de_faturas(conn):
+    """
+    Imprime a lista de todas as faturas presentes na base de dados.
+
+    :param conn: Conexão ativa com a base de dados SQLite.
+    :type conn: sqlite3.Connection
+    """
+    conn = sqlite3.connect('src/oficina.db')
     cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM faturas")

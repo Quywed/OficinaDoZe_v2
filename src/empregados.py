@@ -3,6 +3,12 @@ import getpass
 import hashlib
 
 def inserir_novo_empregado(conn):
+    """
+    Insere um novo empregado na base de dados.
+
+    :param conn: Conexão à base de dados.
+    :type conn: sqlite3.Connection
+    """
 
     try:
         empregados_data = []
@@ -34,6 +40,13 @@ def inserir_novo_empregado(conn):
 
 
 def listar_empregados(conn):
+    """
+    Lista todos os empregados na base de dados.
+
+    :param conn: Conexão à base de dados.
+    :type conn: sqlite3.Connection
+    """
+
     cursor = conn.cursor()
 
     cursor.execute('SELECT * FROM empregados')
@@ -54,6 +67,15 @@ def listar_empregados(conn):
         print("Nenhum registro encontrado na tabela empregados.")
 
 def select_informacao_empregado(conn, empregado_nif):
+    """
+    Seleciona e exibe as informações de um empregado com base no NIF.
+
+    :param conn: Conexão à base de dados.
+    :type conn: sqlite3.Connection
+    :param empregado_nif: NIF do empregado a ser consultado.
+    :type empregado_nif: str
+    """
+
     try:
         cursor = conn.cursor()
 

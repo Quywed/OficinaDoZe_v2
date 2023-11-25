@@ -1,9 +1,0 @@
-# CODIGO GERADO AUTO
-__pycache__/
-*.pyc
-
-# AMBIENTE VIRTUAL
-venv/
-
-# VSCODE
-.vscode/

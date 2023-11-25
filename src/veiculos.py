@@ -1,6 +1,15 @@
 import sqlite3  
 
 def insert_veiculo(conn):
+    """
+    Insere um veículo na tabela 'Veiculos' da base de dados.
+
+    :param conn: Conexão ativa com o base de dados SQLite.
+    :type conn: sqlite3.Connection
+    :raises ValueError: Se o ano estiver fora do intervalo válido (1900-2023)
+                        ou se a quilometragem for negativa.
+    """
+
     try:
         cursor = conn.cursor()
 
@@ -43,6 +52,15 @@ def insert_veiculo(conn):
 
 
 def select_veiculo_cliente(conn, client_nif):
+    """
+    Seleciona os veículos de um cliente específico da tabela 'Veiculos'.
+
+    :param conn: Conexão ativa com a base de dados SQLite.
+    :type conn: sqlite3.Connection
+    :param client_nif: NIF do cliente para o qual os veículos serão selecionados.
+    :type client_nif: int
+    """
+    
     try:
         cursor = conn.cursor()
 
@@ -53,7 +71,7 @@ def select_veiculo_cliente(conn, client_nif):
         carros = cursor.fetchall()
 
         if carros:
-            print(f"\ncarroros do Cliente com o NIF: {client_nif}:")
+            print(f"\ncarros do Cliente com o NIF: {client_nif}:")
 
             # Print header
             print(f"{'Matricula': <15}" + " | " + f"{'Modelo': <20}" + " | " + f"{'Marca': <15}" + " | " +
@@ -64,7 +82,7 @@ def select_veiculo_cliente(conn, client_nif):
                 print(f"{carro[0]: <15}" + " | " + f"{carro[1]: <20}" + " | " + f"{carro[2]: <15}" + " | " +
                       f"{carro[3]: <5}" + " | " + f"{carro[4]: <8}" + " | " + f"{carro[5]: <20}")
         else:
-            print(f"O Cliente com o NIF: {client_nif} não tem carroros")
+            print(f"O Cliente com o NIF: {client_nif} não tem carros")
 
     except sqlite3.Error as sqlite_error:
         print(f"Erro no SQLite durante a execução da query: {sqlite_error}")
@@ -75,6 +93,13 @@ def select_veiculo_cliente(conn, client_nif):
 
 
 def list_veiculos(conn):
+    """
+    Lista todos os veículos presentes na tabela 'Veiculos' da base de dados.
+
+    :param conn: Conexão ativa com a base de dados SQLite.
+    :type conn: sqlite3.Connection
+    """
+    
     try:
         cursor = conn.cursor()
 

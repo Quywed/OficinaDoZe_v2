@@ -6,10 +6,29 @@ conn = sqlite3.connect('src/oficina.db')
 cursor = conn.cursor()
 
 def hash_password(password):
+    """
+    Retorna o hash SHA-256 da senha fornecida.
+
+    :param password: A senha a ser criptografada.
+    :type password: str
+    :return: O hash SHA-256 da senha.
+    :rtype: str
+    """
     return hashlib.sha256(password.encode()).hexdigest()
 
 
 def login(cursor, letra):
+    """
+    Realiza a autenticação de cliente ou empregado.
+
+    :param cursor: O cursor da base de dados.
+    :type cursor: sqlite3.Cursor
+    :param letra: A letra representando 'c' para cliente ou 'e' para empregado.
+    :type letra: str
+    :return: Verdadeiro se a autenticação for bem-sucedida, falso caso contrário.
+    :rtype: bool
+    """
+
     # INPUTS
     nif_input = input("|LOGIN|\n NIF: ")
     password_input = input("Password: ")

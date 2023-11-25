@@ -4,6 +4,12 @@ import hashlib
 
 # Função para inserir um novo cliente
 def inserir_novo_cliente(conn):
+    """
+    Insere um novo cliente na tabela 'clientes' do base de dados.
+
+    :param conn: Conexão a base de dados.
+    :type conn: sqlite3.Connection
+    """
 
     try:
         clientes_data = []
@@ -37,6 +43,13 @@ def inserir_novo_cliente(conn):
 
 # Função para imprimir a lista de clientes
 def imprime_lista_de_clientes(conn):
+    """
+    Imprime a lista de todos os clientes presentes na tabela 'clientes' do base de dados.
+
+    :param conn: Conexão a base de dados.
+    :type conn: sqlite3.Connection
+    """
+
     try:
         cursor = conn.cursor()
 
