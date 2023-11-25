@@ -14,146 +14,199 @@ def hash_password(password):
     """
     return hashlib.sha256(password.encode()).hexdigest()
 
-# CONEXAO
-conn = sqlite3.connect('src/oficina.db')
+def creates_bd(conn):
+    """Cria as tabelas na base de dados.
 
-# CURSOR PARA EXECUTAR QUERYS
-cursor = conn.cursor()
+    Esta função cria as tabelas na base de dados SQLite 'oficina.db' localizada no diretório 'src'.
+    As tabelas criadas são Veiculos, clientes, empregados e faturas se elas ainda não existirem.
 
-# TABELA Veiculos
-cursor.execute('''
-    CREATE TABLE IF NOT EXISTS Veiculos (
-        matricula TEXT PRIMARY KEY,
-        modelo TEXT,
-        marca TEXT,
-        ano INTEGER,
-        km INTEGER,
-        nome_motor TEXT,
-        cliente_nif INTEGER,
-        FOREIGN KEY (cliente_nif) REFERENCES clientes(nif)
-    );
-''')
+    Args:
+        conn: Objeto de conexão com a base de dados.
 
-# TABELA clientes
-cursor.execute('''
-    CREATE TABLE IF NOT EXISTS clientes (
-        nif INTEGER PRIMARY KEY,
-        name TEXT,
-        email TEXT,
-        telefone TEXT,
-        password_hash TEXT
-    );
-''')
+    Raises:
+        OperationalError: Se ocorrer um erro ao criar as tabelas.
 
-# TABELA empregados
-cursor.execute('''
-    CREATE TABLE IF NOT EXISTS empregados (
-        empregado_nif INTEGER PRIMARY KEY,
-        name TEXT,
-        email TEXT,
-        password_hash TEXT
-    );
-''')
+    Returns:
+        None
+    """
+    # CONEXAO
+    conn = sqlite3.connect('src/oficina.db')
 
-# TABELA faturas
-cursor.execute('''
-    CREATE TABLE IF NOT EXISTS faturas (
-        id INTEGER PRIMARY KEY,
-        cliente_nif INTEGER,
-        data_criacao DATE DEFAULT CURRENT_DATE,
-        descricao TEXT,
-        valor REAL,
-        FOREIGN KEY (cliente_nif) REFERENCES clientes(nif)
-    );
-''')
+    # CURSOR PARA EXECUTAR QUERYS
+    cursor = conn.cursor()
+
+    # TABELA Veiculos
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS Veiculos (
+            matricula TEXT PRIMARY KEY,
+            modelo TEXT,
+            marca TEXT,
+            ano INTEGER,
+            km INTEGER,
+            nome_motor TEXT,
+            cliente_nif INTEGER,
+            FOREIGN KEY (cliente_nif) REFERENCES clientes(nif)
+        );
+    ''')
+
+    # TABELA clientes
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS clientes (
+            nif INTEGER PRIMARY KEY,
+            name TEXT,
+            email TEXT,
+            telefone TEXT,
+            password_hash TEXT
+        );
+    ''')
+
+    # TABELA empregados
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS empregados (
+            empregado_nif INTEGER PRIMARY KEY,
+            name TEXT,
+            email TEXT,
+            password_hash TEXT
+        );
+    ''')
+
+    # TABELA faturas
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS faturas (
+            id INTEGER PRIMARY KEY,
+            cliente_nif INTEGER,
+            data_criacao DATE DEFAULT CURRENT_DATE,
+            descricao TEXT,
+            valor REAL,
+            FOREIGN KEY (cliente_nif) REFERENCES clientes(nif)
+        );
+        ''')
+    conn.commit()  # COMMIT
+
+#conn = sqlite3.connect('src/oficina.db')
+#creates_bd()
+
 
 #-----------------------------------INSERTS RANDOM-----------------------------------------------
+def inserts_random(conn):
+    """Insere dados aleatórios nas tabelas.
 
-veiculos_data = []
-clientes_data = []
-empregados_data = []
-faturas_data = []
+    Esta função insere dados fictícios nas tabelas Veiculos, clientes e faturas na base de dados SQLite
+    utilizando uma conexão fornecida.
 
-cliente_random_1 = random.randint(1000, 9999)
-cliente_random_2 = random.randint(1000, 9999)
+    Args:
+        conn: Objeto de conexão com a base de dados.
 
-#INSERT EMPREGADOS-----------------------------------------------
-#INSERT EMPREGADOS-----------------------------------------------
-for e in range(2):
-    password_empregado = "password_empregado" 
-    password_hash_empregado = hashlib.sha256(password_empregado.encode()).hexdigest()
-    empregados_data.append((e + 1, f'Empregado{e}', f'empregado{e}@email.com', password_hash_empregado))
+    Returns:
+        None
+    """
 
-cursor.executemany("INSERT INTO empregados VALUES (?, ?, ?, ?)", empregados_data)
-#---------------------------------------------------------------
+    veiculos_data = []
+    clientes_data = []
+    empregados_data = []
+    faturas_data = []
+    cursor = conn.cursor()
 
-#INSERT CLIENTES-----------------------------------------------
-password_cliente = "password_cliente"
-password_hash_cliente = hashlib.sha256(password_cliente.encode()).hexdigest()
+    cliente_random_1 = random.randint(1000, 9999)
+    cliente_random_2 = random.randint(1000, 9999)
 
-#CLIENTE 1
-password_hash_cliente = hashlib.sha256(password_cliente.encode()).hexdigest()
-clientes_data.append((cliente_random_1,'Cliente1', 'cliente1@email.com', '123456789', password_hash_cliente))
+    #INSERT EMPREGADOS-----------------------------------------------
+    #INSERT EMPREGADOS-----------------------------------------------
+    for e in range(2):
+        password_empregado = "password_empregado" 
+        password_hash_empregado = hashlib.sha256(password_empregado.encode()).hexdigest()
+        empregados_data.append((e + 1, f'Empregado{e}', f'empregado{e}@email.com', password_hash_empregado))
 
-#CLIENTE 2 
-password_hash_cliente = hashlib.sha256(password_cliente.encode()).hexdigest()
-clientes_data.append((cliente_random_2,'Cliente2', 'cliente2@email.com', '987654321', password_hash_cliente))
+    cursor.executemany("INSERT INTO empregados VALUES (?, ?, ?, ?)", empregados_data)
+    #---------------------------------------------------------------
 
-#--------------------------------------------------------------
-#INSERT MATRICULAS---------------------------------------------
-matricula_random_1 = "ABC_200"
-matricula_random_2 = "CBA_300"
+    #INSERT CLIENTES-----------------------------------------------
+    password_cliente = "password_cliente"
+    password_hash_cliente = hashlib.sha256(password_cliente.encode()).hexdigest()
 
-#MATRICULA 1
-veiculos_data.append((matricula_random_1, 'Modelo1', 'Marca1', 2020, 50000, 'Motor1', cliente_random_1))
+    #CLIENTE 1
+    password_hash_cliente = hashlib.sha256(password_cliente.encode()).hexdigest()
+    clientes_data.append((cliente_random_1,'Cliente1', 'cliente1@email.com', '123456789', password_hash_cliente))
 
-#MATRICULA 2
-veiculos_data.append((matricula_random_2, 'Modelo2', 'Marca2', 2020, 50000, 'Motor2', cliente_random_2))
+    #CLIENTE 2 
+    password_hash_cliente = hashlib.sha256(password_cliente.encode()).hexdigest()
+    clientes_data.append((cliente_random_2,'Cliente2', 'cliente2@email.com', '987654321', password_hash_cliente))
 
-#--------------------------------------------------------------
-#INSERT FATURAS------------------------------------------------
+    #--------------------------------------------------------------
+    #INSERT MATRICULAS---------------------------------------------
+    matricula_random_1 = "ABC_200"
+    matricula_random_2 = "CBA_300"
 
-faturas_random_1 = 111
-faturas_random_2 = 222
+    #MATRICULA 1
+    veiculos_data.append((matricula_random_1, 'Modelo1', 'Marca1', 2020, 50000, 'Motor1', cliente_random_1))
 
-#FATURA 1
-faturas_data.append((faturas_random_1, cliente_random_1, datetime.now(), 'Servico1', 100.00))
+    #MATRICULA 2
+    veiculos_data.append((matricula_random_2, 'Modelo2', 'Marca2', 2020, 50000, 'Motor2', cliente_random_2))
 
-#FATURA 2
-faturas_data.append((faturas_random_2, cliente_random_2, datetime.now(), 'Servico2', 200.00))
+    #--------------------------------------------------------------
+    #INSERT FATURAS------------------------------------------------
 
-cursor.executemany("INSERT INTO Veiculos VALUES (?, ?, ?, ?, ?, ?, ?)", veiculos_data)
-cursor.executemany("INSERT INTO clientes VALUES (?, ?, ?, ?, ?)", clientes_data)
-cursor.executemany("INSERT INTO faturas VALUES (?, ?, ?, ?, ?)", faturas_data)
+    faturas_random_1 = 111
+    faturas_random_2 = 222
 
-# LISTAR (SELECT)
-cursor.execute("SELECT * FROM Veiculos;")
-veiculos = cursor.fetchall()
+    #FATURA 1
+    faturas_data.append((faturas_random_1, cliente_random_1, datetime.now(), 'Servico1', 100.00))
 
-print("\nVEICULOS:")
-for veiculo in veiculos:
-    print(veiculo)
+    #FATURA 2
+    faturas_data.append((faturas_random_2, cliente_random_2, datetime.now(), 'Servico2', 200.00))
 
-cursor.execute("SELECT * FROM clientes;")
-clientes = cursor.fetchall()
+    cursor.executemany("INSERT INTO Veiculos VALUES (?, ?, ?, ?, ?, ?, ?)", veiculos_data)
+    cursor.executemany("INSERT INTO clientes VALUES (?, ?, ?, ?, ?)", clientes_data)
+    cursor.executemany("INSERT INTO faturas VALUES (?, ?, ?, ?, ?)", faturas_data)
 
-print("\nCLIENTES:")
-for cliente in clientes:
-    print(cliente)
+    conn.commit()  # COMMIT
 
-cursor.execute("SELECT * FROM empregados;")
-empregados = cursor.fetchall()
+#conn = sqlite3.connect('src/oficina.db')
+#inserts_random(conn)
+def listar_tabelas(conn):
+    """Lista o conteúdo das tabelas na base de dados.
 
-print("\nEMPREGADO:")
-for i in empregados:
-    print(i)
+    Esta função realiza uma seleção de todos os registros em cada tabela
+    (Veiculos, clientes, empregados, faturas) na base de dados e exibe
+    o conteúdo de cada uma.
 
-cursor.execute("SELECT * FROM faturas;")
-faturas = cursor.fetchall()
+    Args:
+        conn: Objeto de conexão com a base de dados.
 
-print("\nFATURAS:")
-for fatura in faturas:
-    print(fatura)
+    Returns:
+        None
+    """
+    
+    cursor = conn.cursor()
 
-conn.commit()  # COMMIT
-conn.close()   # FECHAR A CONEXAO
+    # LISTAR (SELECT)
+    cursor.execute("SELECT * FROM Veiculos;")
+    veiculos = cursor.fetchall()
+
+    print("\nVEICULOS:")
+    for veiculo in veiculos:
+        print(veiculo)
+
+    cursor.execute("SELECT * FROM clientes;")
+    clientes = cursor.fetchall()
+
+    print("\nCLIENTES:")
+    for cliente in clientes:
+        print(cliente)
+
+    cursor.execute("SELECT * FROM empregados;")
+    empregados = cursor.fetchall()
+
+    print("\nEMPREGADO:")
+    for i in empregados:
+        print(i)
+
+    cursor.execute("SELECT * FROM faturas;")
+    faturas = cursor.fetchall()
+
+    print("\nFATURAS:")
+    for fatura in faturas:
+        print(fatura)
+
+    conn.commit()  # COMMIT
+    conn.close()   # FECHAR A CONEXAO

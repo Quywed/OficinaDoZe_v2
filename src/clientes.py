@@ -69,6 +69,19 @@ def imprime_lista_de_clientes(conn):
 
 #Ver informação de um cliente especifico
 def select_informacao_cliente(conn, client_nif):
+    """Seleciona e exibe informações de um cliente baseado no NIF.
+
+    Esta função realiza uma consulta na tabela 'clientes' da base de dados utilizando o número de identificação
+    fiscal (NIF) fornecido como argumento e exibe as informações do cliente se ele existir.
+
+    Args:
+        conn: Objeto de conexão com a base de dados.
+        client_nif: NIF do cliente a ser pesquisado.
+
+    Returns:
+        None
+    """
+
     try:
         cursor = conn.cursor()
 

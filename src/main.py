@@ -7,7 +7,19 @@ import getpass
 
 
 def cliente(conn, logged_user):
+    """Interface para acesso do cliente às informações.
 
+    Esta função representa uma interface de usuário para clientes acessarem informações relacionadas às suas contas
+    na oficina. Ela permite que o cliente visualize seus dados pessoais, veículos e faturas, bem como oferece a opção
+    de sair da interface.
+
+    Args:
+        conn: Objeto de conexão com a base de dados.
+        logged_user: Dados do usuário logado (cliente) atualmente na interface.
+
+    Returns:
+        None
+    """
     while True: 
         print("""
     *********************************************************************
@@ -44,6 +56,18 @@ def cliente(conn, logged_user):
 
 
 def empregado(conn):
+    """Interface para acesso às opções dos funcionários na oficina.
+
+    Esta função representa uma interface de usuário para funcionários da oficina. 
+    Permite que eles acessem diferentes seções do sistema, como clientes, veículos e faturas, 
+    fornecendo opções específicas dentro de cada seção.
+
+    Args:
+        conn: Objeto de conexão com a base de dados.
+
+    Returns:
+        None
+    """
     
     while True:
         print("""
@@ -164,10 +188,32 @@ def empregado(conn):
             exit()
 
 def hash_password(password):
+    """Cria um hash SHA256 da senha fornecida.
+
+    Args:
+        password (str): Senha a ser convertida em hash.
+
+    Returns:
+        str: Hash SHA256 da senha.
+    """
     return hashlib.sha256(password.encode()).hexdigest()
 
 
 def login(cursor, letra):
+    """Realiza o login de clientes ou empregados no sistema.
+
+    Esta função permite que clientes (letra 'c') e empregados (letra 'e') façam login no sistema,
+    verificando as credenciais fornecidas no banco de dados.
+
+    Args:
+        cursor: Cursor para executar consultas no banco de dados.
+        letra (str): Letra identificadora ('c' para cliente, 'e' para empregado).
+
+    Returns:
+        dict or False: Um dicionário com informações de autenticação se o login for bem-sucedido.
+            O dicionário contém 'type' (tipo: 'client' ou 'employee') e 'id' (identificação).
+            Retorna False se o login falhar.
+    """
     # INPUTS
     nif_input = input("|LOGIN|\n NIF: ")
     password_input = getpass.getpass("Password: ")
@@ -197,13 +243,27 @@ def login(cursor, letra):
             return False
 
 def menu():
+    """Exibe o menu principal da aplicação e direciona para os submenus de login de clientes e empregados.
+
+    O menu principal permite escolher entre realizar login como cliente ou empregado,
+    redirecionando para os menus correspondentes.
+
+    As opções disponíveis:
+    1. Cliente: Redireciona para o submenu de login ou criação de conta para clientes.
+    2. Empregado: Realiza o login como empregado.
+    X: Sai da aplicação.
+
+    """
+
+    # CONEXAO
+    conn = sqlite3.connect('src/oficina.db')
+
+    # CURSOR PARA EXECUTAR QUERYS
+    cursor = conn.cursor()
+
     while True:
         """Menu principal da aplicação"""
-        # CONEXAO
-        conn = sqlite3.connect('src/oficina.db')
-
-        # CURSOR PARA EXECUTAR QUERYS
-        cursor = conn.cursor()
+        
 
         logged_user = None
         print("""
@@ -249,8 +309,6 @@ def menu():
             if opc == 'cc':
                 inserir_novo_cliente(conn)
         
-
-
         elif op == '2':
             # Entrar em Empregados
             empregado_encontrado = login(cursor, op)

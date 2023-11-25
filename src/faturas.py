@@ -43,6 +43,19 @@ def imprime_lista_de_faturas(conn):
 
 
 def faturas_cliente(conn, cliente_nif):
+    """Seleciona e exibe as faturas de um cliente baseado no NIF.
+
+    Esta função realiza uma consulta na tabela 'faturas' da base de dados utilizando o número de identificação
+    fiscal (NIF) fornecido como argumento e exibe as faturas relacionadas ao cliente se elas existirem.
+
+    Args:
+        conn: Objeto de conexão com a base de dados.
+        cliente_nif: NIF do cliente para o qual as faturas serão pesquisadas.
+
+    Returns:
+        None
+    """
+
     try:
         with conn:
             cursor = conn.cursor()
