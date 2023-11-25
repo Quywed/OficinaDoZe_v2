@@ -1,7 +1,10 @@
 from clientes import *
 from faturas import *
 from veiculos import *
+from empregados import *
 import hashlib
+import getpass
+
 
 ####################################################################
 #
@@ -17,7 +20,6 @@ import hashlib
 def cliente(conn, logged_user):
 
     while True: 
-        print("Nif do Cliente " + str(logged_user['id']))
         print("""
     *********************************************************************
     :                (-: OFICINA DO ZÉ - MORTE AO IUC :-)               :
@@ -28,13 +30,15 @@ def cliente(conn, logged_user):
     :                           3 - Ver as Minhas Faturas               :
     :                                                                   :
     :                                                                   :
-    : X - EXIT                                                          :
+    :  X -EXIT                                                          :
     :                                                                   :
     *********************************************************************
     """)
         opc = input("opcao?")
         if opc == '1':
             # Ver os Meus Dados
+            client_nif = str(logged_user['id'])
+            select_informacao_cliente(conn, client_nif)
             pass
         elif opc == '2':
             # Ver os Meus Veiculos
@@ -46,6 +50,8 @@ def cliente(conn, logged_user):
             faturas_cliente(conn, client_nif)
         elif opc == "R" or opc == "r":
             logged_user = None
+        elif opc == "x":
+            exit()
 
 
 def empregado(conn):
@@ -82,7 +88,7 @@ def empregado(conn):
         :                                                                   :                                                                  
         :                                                                   :
         :                                                                   :
-        : X - EXIT                                                          :
+        :X - EXIT                                                           :
         :                                                                   :
         *********************************************************************
         """)
@@ -94,7 +100,7 @@ def empregado(conn):
                 # TODO Listar todos os clientes
                 imprime_lista_de_clientes(conn)
   
-            elif ope == "x":
+            elif opo == "x":
                 exit()
 
         elif ope == "2":
@@ -110,7 +116,7 @@ def empregado(conn):
             :                   3 - Listar todos os Veiculo                     :                                                                  
             :                                                                   :
             :                                                                   :
-            : X - EXIT                                                          :
+            :X -EXIT                                                            :
             :                                                                   :
             *********************************************************************
             """)
@@ -126,7 +132,7 @@ def empregado(conn):
                 # TODO Listar todos os veiculos
                 list_veiculos(conn)
 
-            elif ope == "x":
+            elif opo == "x":
                 exit()
 
         elif ope == "3":
@@ -141,7 +147,7 @@ def empregado(conn):
             :                    2 - Listar Todas as Faturas                    :
             :                    3 - Listar Faturas de um Cliente               :                                                                  
             :                                                                   :
-            : R - RETURN                                                        :
+            :                                                                   :
             : X - EXIT                                                          :
             :                                                                   :
             *********************************************************************
@@ -160,18 +166,13 @@ def empregado(conn):
                 
 
             elif opo == "R" or opo == "r":
-                logged_user = None  
+                pass
 
-            elif ope == "x":
+            elif opo == "x":
                 exit()      
 
         elif ope == "x":
             exit()
-
-
-           
-               
-
 
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
@@ -180,7 +181,7 @@ def hash_password(password):
 def login(cursor, letra):
     # INPUTS
     nif_input = input("|LOGIN|\n NIF: ")
-    password_input = input("Password: ")
+    password_input = getpass.getpass("Password: ")
 
     hashed_password_input = hash_password(password_input)
 
@@ -207,59 +208,67 @@ def login(cursor, letra):
             return False
 
 def menu():
-    """Menu principal da aplicação"""
-    # CONEXAO
-    conn = sqlite3.connect('src/oficina.db')
+    while True:
+        """Menu principal da aplicação"""
+        # CONEXAO
+        conn = sqlite3.connect('src/oficina.db')
 
-    # CURSOR PARA EXECUTAR QUERYS
-    cursor = conn.cursor()
+        # CURSOR PARA EXECUTAR QUERYS
+        cursor = conn.cursor()
 
-    logged_user = None
-    print("""
-        *********************************************************************
-        :                (-: OFICINA DO ZÉ - MORTE AO IUC :-)               :
-        *********************************************************************
-        : LOGIN                                                             :
-        :                           1 - Cliente                             :
-        :                           2 - Empregado                           :
-        :                                                                   :
-        :                                                                   :
-        :                                                                   :
-        : X - EXIT                                                          :
-        :                                                                   :
-        *********************************************************************
-        """)
-
-    op = input("opcao?")
-    if op == "1":
-        # Entrar em Login Clientes  
+        logged_user = None
         print("""
-        *********************************************************************
-        :                (-: OFICINA DO ZÉ - MORTE AO IUC :-)               :
-        *********************************************************************
-        : LOGIN CLIENTES                                                    :
-        :                           c - Login                               :
-        :                           cc - Criar Conta                        :
-        :                                                                   :
-        :                                                                   :
-        : R - RETURN                                                        :
-        : X - EXIT                                                          :
-        :                                                                   :
-        *********************************************************************
-        """)
-        opc = input("opcao?")
-        if opc == 'c':
-            # Login Clientes
-            logged_user = login(cursor, opc)
-            if logged_user and logged_user['type'] == 'client':
-                cliente(conn,logged_user)
-            else:
-                print("Login falhou. Cliente não encontrado ou senha incorreta.")
-    elif op == '2':
-        # Entrar em Empregados
-        empregado_encontrado = login(cursor, op)
-        if empregado_encontrado != False:
-            empregado(conn)
+            *********************************************************************
+            :                (-: OFICINA DO ZÉ - MORTE AO IUC :-)               :
+            *********************************************************************
+            : LOGIN                                                             :
+            :                           1 - Cliente                             :
+            :                           2 - Empregado                           :
+            :                                                                   :
+            :                                                                   :
+            :                                                                   :
+            :  X - EXIT                                                         :
+            :                                                                   :
+            *********************************************************************
+            """)
+
+        op = input("opcao?")
+        if op == "1":
+            # Entrar em Login Clientes  
+            print("""
+            *********************************************************************
+            :                (-: OFICINA DO ZÉ - MORTE AO IUC :-)               :
+            *********************************************************************
+            : LOGIN CLIENTES                                                    :
+            :                           c - Login                               :
+            :                           cc - Criar Conta                        :
+            :                                                                   :
+            :                                                                   :
+            :                                                                   :
+            : X - EXIT                                                          :
+            :                                                                   :
+            *********************************************************************
+            """)
+            opc = input("opcao?")
+            if opc == 'c':
+                # Login Clientes
+                logged_user = login(cursor, opc)
+                if logged_user and logged_user['type'] == 'client':
+                    cliente(conn,logged_user)
+                else:
+                    print("Login falhou. Cliente não encontrado ou senha incorreta.")
+            if opc == 'cc':
+                inserir_novo_cliente(conn)
+        
+
+
+        elif op == '2':
+            # Entrar em Empregados
+            empregado_encontrado = login(cursor, op)
+            if empregado_encontrado != False:
+                empregado(conn)
+        elif op == 'x':
+            exit()
 
 
 if __name__ == "__main__":

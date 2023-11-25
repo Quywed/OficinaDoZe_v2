@@ -12,18 +12,9 @@ def inserir_novo_cliente(conn):
     """
 
     try:
-        clientes_data = []
-
-        #APAGAR NO FIM
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM clientes;")
-        clientes = cursor.fetchall()
 
-        print("\nCLIENTES:")
-        for cliente in clientes:
-            print(cliente)
-        #APAGAR NO FIM
-
+        clientes_data = []
         nome = input("CLIENTE\nNome: ")
         nif = input("NIF: ")
         email = input("Email: ")
@@ -35,6 +26,8 @@ def inserir_novo_cliente(conn):
         clientes_data.append((nif,nome,email,telefone, password_hash_cliente))
 
         cursor.executemany("INSERT INTO clientes VALUES (?, ?, ?, ?, ?)", clientes_data)
+
+        print ("Cliente registado com sucesso! ")
 
     except sqlite3.IntegrityError as e:
         print("Ocorreu um erro. O cliente com o nif: '" + nif + "' já deve existir na BD.")
