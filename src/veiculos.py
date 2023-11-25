@@ -2,9 +2,9 @@ import sqlite3
 
 def insert_veiculo(conn):
     """
-    Insere um veículo na tabela 'Veiculos' do banco de dados.
+    Insere um veículo na tabela 'Veiculos' da base de dados.
 
-    :param conn: Conexão ativa com o banco de dados SQLite.
+    :param conn: Conexão ativa com o base de dados SQLite.
     :type conn: sqlite3.Connection
     :raises ValueError: Se o ano estiver fora do intervalo válido (1900-2023)
                         ou se a quilometragem for negativa.
@@ -56,7 +56,7 @@ def select_veiculo_cliente(conn, client_nif):
     """
     Seleciona os veículos de um cliente específico da tabela 'Veiculos'.
 
-    :param conn: Conexão ativa com o banco de dados SQLite.
+    :param conn: Conexão ativa com a base de dados SQLite.
     :type conn: sqlite3.Connection
     :param client_nif: NIF do cliente para o qual os veículos serão selecionados.
     :type client_nif: int
@@ -90,9 +90,9 @@ def select_veiculo_cliente(conn, client_nif):
 
 def list_veiculos(conn):
     """
-    Lista todos os veículos presentes na tabela 'Veiculos' do banco de dados.
+    Lista todos os veículos presentes na tabela 'Veiculos' da base de dados.
 
-    :param conn: Conexão ativa com o banco de dados SQLite.
+    :param conn: Conexão ativa com a base de dados SQLite.
     :type conn: sqlite3.Connection
     """
     

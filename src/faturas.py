@@ -5,7 +5,7 @@ nome_ficheiro_lista_de_faturas = "lista_de_faturas.pk"
 
 def cria_nova_fatura(cliente_nif, descricao, valor):
     """
-    Cria uma nova fatura no banco de dados.
+    Cria uma nova fatura na base de dados.
 
     :param cliente_nif: NIF do cliente associado à fatura.
     :type cliente_nif: int
@@ -18,7 +18,7 @@ def cria_nova_fatura(cliente_nif, descricao, valor):
     conn = sqlite3.connect('src/oficina.db')
     cursor = conn.cursor()
 
-    data_criacao = datetime.now()
+    data_criacao = date.now()
 
     cursor.execute("INSERT INTO faturas (cliente_nif, data_criacao, descricao, valor) VALUES (?, ?, ?, ?)",
                    (cliente_nif, data_criacao, descricao, valor))
@@ -28,7 +28,7 @@ def cria_nova_fatura(cliente_nif, descricao, valor):
 
 def imprime_lista_de_faturas():
     """
-    Imprime a lista de todas as faturas presentes no banco de dados.
+    Imprime a lista de todas as faturas presentes na base de dados.
     """
     conn = sqlite3.connect('src/oficina.db')
     cursor = conn.cursor()
