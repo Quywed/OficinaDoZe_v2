@@ -6,17 +6,6 @@ import hashlib
 import getpass
 
 
-####################################################################
-#
-# TODO: CRIAR FUNCOES DE CRUD PARA CADA TABELA 
-#       IMPORT DAS DEVIDAS FUNCOES
-# TODO: ADICIONAR SISTEMA DE LOGIN
-#
-# ...
-#
-#
-#
-####################################################################
 def cliente(conn, logged_user):
 
     while True: 
