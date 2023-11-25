@@ -1,65 +1,52 @@
-# README
+# Oficina do Zé - Sistema de Gestão para Oficina de Automóveis.
 
-Este README documenta as etapas necessárias para colocar seu aplicativo em funcionamento.
+Bem-vindo ao projeto Oficina do Zé! Este sistema foi projetado para gerir clientes, veículos e faturas numa oficina.
 
-### Para que serve este repositório?
+## Introdução
 
-* Resumo rápido...
-* Versão...
-* [Sintaxe básica de gravação e formatação no GitHub](https://docs.github.com/pt/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
+Este projeto pretende fornecer uma interface simples de linha de comando para gerir uma oficina. Utiliza o SQLite para armazenamento da base de dados e inclui funcionalidades para clientes, veículos e faturas.
 
-### Como faço para configurar?
+## Recursos
 
-* Resumo da configuração...
-* Configuração...
-* Dependências
+- **Gestão de Clientes (clientes.py) :** Funções para gestão de clientes.
+- **Gestão de Veículos (veiculos.py) :** Funções para gestão de veículos de clientes.
+- **Gestão de Faturas (faturas.py) :** Funções para gestão de faturas dos serviço.
+- **Gestão de Empregados (empregado.py )** Funções para gestão de empregados.
 
-    Para criar um ambiente virtual
+## Step-by-step como iniciar o programa
 
-    ```
-    $ python -m venv .venv
-	```
-	
-	Depois, é necessário ativar o ambiente virtual
-	
-	```
-    $ .venv\Scripts\activate
-    ```
+Para executar o programa, tem de garantir que a base de dados da oficina esteja criada, e com ao menos alguns inserts de registos nas tabelas. Para mais informações, aceda à página de informação sobre o [ficheiro da base de dados](https://github.com/Quywed/OficinaDoZe_v2/wiki/Base-de-Dados).
 
-    e depois instalar as livrarias necessárias
+### Linguagens e Bibliotecas usadas
 
-    ```
-    $ pip install -r requirements.txt
-    ```
+- Python  | linguagem dos scripts criados
+- SQLite  | biblioteca em linguagem C que implementa uma base de dados SQL embutida
+- Hashlib | bilbioteca que implementa uma interface comum para muitos algoritmos criptográficos seguros de hash e de digestão de mensagens
+- Getpass | biblioteca que contém uma função que permite esconder a password
 
-* Configuração de banco de dados...
-* Como fazer testes...
-* Instruções de implantação...
+### Instalação
 
-#### Documentação
+Para conseguir executar os ficheiros, é necessário ter um IDE instalado com algum tipo de intrepretador de python instalado no mesmo. Recomendamos o **Visual Studio Code** com o Interpretador de Python **Anaconda**.
 
-Para gerar a configuração para o sphinx, crie uma pasta com o nome `doc`, e mude para essa pasta
+Após ter realizado os passos anteriores, é necessário ter o módulo de **SQLITE3** instalado. Por defeito deve vir instalado com o Python, mas caso a versão seja anterior à Python 3.0, na linha de comandos, execute o seguinte comando:
 
 ```
-$ mkdir doc
-$ cd doc
+pip install pysqlite3
 ```
 
-e depois escreva o comando abaixo, alterando o nome do(s) autor(es), e o nome da aplicação:
+Quando estiver no VSCODE, para clonar o repositório, siga os seguintes passos:
+
+1. Abrir a palette de comandos com a combinação de teclas **Ctrl + Shift + P**.
+
+2. Selecionar a opção **Git Clone**
+
+3. Inserir o URL do repositório:
 
 ```
-$ sphinx-apidoc -F -f -A "nome do autor" -V 0 -R 0.1 -H "nome da aplicação" -e -P -a --ext-autodoc --ext-viewcode --ext-todo -o . ./../src/
+   git clone [https://github.com/seu-nome-de-usuário/oficina-do-ze.git](https://github.com/Quywed/OficinaDoZe_v2.git)
 ```
 
-Posteriormente deve configurar o ficheiro `doc\config.py` com as alterações que entenda necessárias
+4. Selecionar a pasta/diretoria no seu computador para onde os ficheiros irão ser clonados
 
-### Diretrizes de contribuição
+Se tiver realizado estes passos, os ficheiros devem ter sido clonados com sucesso para a pasta que selecionou no último passo
 
-* Testes de escrita...
-* Revisão de código...
-* Outras diretrizes...
-
-### Com quem devo falar?
-
-* Proprietário ou administrador do repo...
-* Outro contato da comunidade ou equipe...
