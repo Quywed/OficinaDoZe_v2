@@ -59,34 +59,60 @@ cursor.execute('''
     );
 ''')
 
-# INSERTS
+#-----------------------------------INSERTS RANDOM-----------------------------------------------
+
 veiculos_data = []
 clientes_data = []
 empregados_data = []
 faturas_data = []
 
+cliente_random_1 = random.randint(1000, 9999)
+cliente_random_2 = random.randint(1000, 9999)
+
+#INSERT EMPREGADOS-----------------------------------------------
+#INSERT EMPREGADOS-----------------------------------------------
 for e in range(2):
-    password_empregado = "password_empregado"  # Change this to your password logic
+    password_empregado = "password_empregado" 
     password_hash_empregado = hashlib.sha256(password_empregado.encode()).hexdigest()
     empregados_data.append((e + 1, f'Empregado{e}', f'empregado{e}@email.com', password_hash_empregado))
 
 cursor.executemany("INSERT INTO empregados VALUES (?, ?, ?, ?)", empregados_data)
+#---------------------------------------------------------------
 
-for c in range(2):
-    password_cliente = "password_cliente"  # Change this to your password logic
-    password_hash_cliente = hashlib.sha256(password_cliente.encode()).hexdigest()
-    cliente_random = random.randint(1000, 9999)
-    clientes_data.append((cliente_random, f'Cliente{c}', f'cliente{c}@email.com', '123456789', password_hash_cliente))
+#INSERT CLIENTES-----------------------------------------------
+password_cliente = "password_cliente"
+password_hash_cliente = hashlib.sha256(password_cliente.encode()).hexdigest()
 
-for v in range(2):
-    matricula_random = f"ABC{random.randint(100, 999)}"
-    cliente_random = random.choice(clientes_data)[0]
-    veiculos_data.append((matricula_random, 'Modelo', 'Marca1', 2020, 50000, 'Motor1', cliente_random))
+#CLIENTE 1
+password_hash_cliente = hashlib.sha256(password_cliente.encode()).hexdigest()
+clientes_data.append((cliente_random_1,'Cliente1', 'cliente1@email.com', '123456789', password_hash_cliente))
 
-for f in range(2):
-    faturas_random = random.randint(1000, 9999)
-    cliente_random = random.choice(clientes_data)[0]
-    faturas_data.append((faturas_random, cliente_random, datetime.now(), 'Servico1', 100.00))
+#CLIENTE 2 
+password_hash_cliente = hashlib.sha256(password_cliente.encode()).hexdigest()
+clientes_data.append((cliente_random_2,'Cliente2', 'cliente2@email.com', '987654321', password_hash_cliente))
+
+#--------------------------------------------------------------
+#INSERT MATRICULAS---------------------------------------------
+matricula_random_1 = "ABC_200"
+matricula_random_2 = "CBA_300"
+
+#MATRICULA 1
+veiculos_data.append((matricula_random_1, 'Modelo1', 'Marca1', 2020, 50000, 'Motor1', cliente_random_1))
+
+#MATRICULA 2
+veiculos_data.append((matricula_random_2, 'Modelo2', 'Marca2', 2020, 50000, 'Motor2', cliente_random_2))
+
+#--------------------------------------------------------------
+#INSERT FATURAS------------------------------------------------
+
+faturas_random_1 = 111
+faturas_random_2 = 222
+
+#FATURA 1
+faturas_data.append((faturas_random_1, cliente_random_1, datetime.now(), 'Servico1', 100.00))
+
+#FATURA 2
+faturas_data.append((faturas_random_2, cliente_random_2, datetime.now(), 'Servico2', 200.00))
 
 cursor.executemany("INSERT INTO Veiculos VALUES (?, ?, ?, ?, ?, ?, ?)", veiculos_data)
 cursor.executemany("INSERT INTO clientes VALUES (?, ?, ?, ?, ?)", clientes_data)

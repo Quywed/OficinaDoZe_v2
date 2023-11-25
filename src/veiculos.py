@@ -50,14 +50,21 @@ def select_veiculo_cliente(conn, client_nif):
             SELECT * FROM Veiculos WHERE cliente_nif = ?;
         ''', (client_nif,))
 
-        cars = cursor.fetchall()
+        carros = cursor.fetchall()
 
-        if cars:
-            print(f"Carros do Cliente com o NIF: {client_nif}:")
-            for car in cars:
-                print(f"Matricula: {car[0]}, Modelo: {car[1]}, Marca: {car[2]}, Ano: {car[3]}, KM: {car[4]}, Nome do Motor: {car[5]}")
+        if carros:
+            print(f"\ncarroros do Cliente com o NIF: {client_nif}:")
+
+            # Print header
+            print(f"{'Matricula': <15}" + " | " + f"{'Modelo': <20}" + " | " + f"{'Marca': <15}" + " | " +
+                  f"{'Ano': <5}" + " | " + f"{'KM': <8}" + " | " + f"{'Nome do Motor': <20}\n")
+
+            
+            for carro in carros:
+                print(f"{carro[0]: <15}" + " | " + f"{carro[1]: <20}" + " | " + f"{carro[2]: <15}" + " | " +
+                      f"{carro[3]: <5}" + " | " + f"{carro[4]: <8}" + " | " + f"{carro[5]: <20}")
         else:
-            print(f"O Cliente com o NIF: {client_nif} não tem carros")
+            print(f"O Cliente com o NIF: {client_nif} não tem carroros")
 
     except sqlite3.Error as sqlite_error:
         print(f"Erro no SQLite durante a execução da query: {sqlite_error}")
@@ -89,6 +96,3 @@ def list_veiculos(conn):
 
     except Exception as e:
         print(f"Erro inesperado: {e}")
-
-
-
