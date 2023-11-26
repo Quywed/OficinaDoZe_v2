@@ -30,5 +30,5 @@ def dropping_bd(conn):
     conn.commit()
     conn.close()
 
-#conn = sqlite3.connect('src/oficina.db')
-#dropping_bd(conn)
+conn = sqlite3.connect('src/oficina.db')
+dropping_bd(conn)

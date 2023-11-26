@@ -67,6 +67,8 @@ def imprime_lista_de_clientes(conn):
         print(f"ERRO: a tabela não existe ou não existem registos")
 
 
+
+
 #Ver informação de um cliente especifico
 def select_informacao_cliente(conn, client_nif):
     """Seleciona e exibe informações de um cliente baseado no NIF.

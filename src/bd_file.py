@@ -83,8 +83,8 @@ def creates_bd(conn):
         ''')
     conn.commit()  # COMMIT
 
-#conn = sqlite3.connect('src/oficina.db')
-#creates_bd()
+conn = sqlite3.connect('src/oficina.db')
+creates_bd(conn)
 
 
 #-----------------------------------INSERTS RANDOM-----------------------------------------------
@@ -110,12 +110,16 @@ def inserts_random(conn):
     cliente_random_1 = random.randint(1000, 9999)
     cliente_random_2 = random.randint(1000, 9999)
 
+    empregado_random_1 = random.randint(1000, 9999)
+    empregado_random_2 = random.randint(1000, 9999)
+    list_nif_empregado = [empregado_random_1, empregado_random_2]
+
     #INSERT EMPREGADOS-----------------------------------------------
     #INSERT EMPREGADOS-----------------------------------------------
     for e in range(2):
         password_empregado = "password_empregado" 
         password_hash_empregado = hashlib.sha256(password_empregado.encode()).hexdigest()
-        empregados_data.append((e + 1, f'Empregado{e}', f'empregado{e}@email.com', password_hash_empregado))
+        empregados_data.append((list_nif_empregado[e], f'Empregado{e}', f'empregado{e}@email.com', password_hash_empregado))
 
     cursor.executemany("INSERT INTO empregados VALUES (?, ?, ?, ?)", empregados_data)
     #---------------------------------------------------------------
@@ -134,8 +138,11 @@ def inserts_random(conn):
 
     #--------------------------------------------------------------
     #INSERT MATRICULAS---------------------------------------------
-    matricula_random_1 = "ABC_200"
-    matricula_random_2 = "CBA_300"
+    num_random_1 = random.randint(100, 999)
+    num_random_2 = random.randint(100, 999)
+
+    matricula_random_1 = "ABC_" + str(num_random_1)
+    matricula_random_2 = "CBA_" + str(num_random_2)
 
     #MATRICULA 1
     veiculos_data.append((matricula_random_1, 'Modelo1', 'Marca1', 2020, 50000, 'Motor1', cliente_random_1))
@@ -146,8 +153,8 @@ def inserts_random(conn):
     #--------------------------------------------------------------
     #INSERT FATURAS------------------------------------------------
 
-    faturas_random_1 = 111
-    faturas_random_2 = 222
+    faturas_random_1 = random.randint(100, 999)
+    faturas_random_2 = random.randint(100, 999)
 
     #FATURA 1
     faturas_data.append((faturas_random_1, cliente_random_1, datetime.now(), 'Servico1', 100.00))
@@ -161,8 +168,10 @@ def inserts_random(conn):
 
     conn.commit()  # COMMIT
 
-#conn = sqlite3.connect('src/oficina.db')
-#inserts_random(conn)
+conn = sqlite3.connect('src/oficina.db')
+inserts_random(conn)
+
+
 def listar_tabelas(conn):
     """Lista o conteúdo das tabelas na base de dados.
 
@@ -176,7 +185,7 @@ def listar_tabelas(conn):
     Returns:
         None
     """
-    
+
     cursor = conn.cursor()
 
     # LISTAR (SELECT)
@@ -210,3 +219,6 @@ def listar_tabelas(conn):
 
     conn.commit()  # COMMIT
     conn.close()   # FECHAR A CONEXAO
+
+conn = sqlite3.connect('src/oficina.db')
+listar_tabelas(conn)
